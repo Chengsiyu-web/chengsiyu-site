@@ -1,0 +1,87 @@
+---
+import Nav from "../components/Nav.astro";
+import { site } from "../config";
+
+interface Props {
+  title: string;
+  description?: string;
+}
+const { title, description = site.description } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#141414" />
+    <title>{title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style is:global>
+      @import "../styles/global.css";
+    </style>
+  </head>
+  <body>
+    <Nav />
+    <slot />
+    <script>
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              e.target.classList.add("is-visible");
+              io.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.12 }
+      );
+      document.querySelectorAll(".reveal").forEach((el, i) => {
+        el.style.transitionDelay = `${(i % 6) * 60}ms`;
+        io.observe(el);
+      });
+
+      // 首页：封面在视口内时导航用深色，滚出封面恢复浅色
+      const nav = document.querySelector(".nav");
+      if (nav && document.querySelector(".cover")) {
+        const sync = () => {
+          nav.classList.toggle("on-dark", window.scrollY < window.innerHeight - 60);
+        };
+        sync();
+        window.addEventListener("scroll", sync, { passive: true });
+      }
+    </script>
+    <footer class="site-footer">
+      <div class="footer-inner">
+        <span class="mono">© 2026 {`${site.firstName} ${site.lastName}`.toUpperCase()}</span>
+        <span class="mono footer-note">{site.footerNote}</span>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--hairline);
+    margin-top: 160px;
+  }
+  .footer-inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 32px 40px;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-note { color: var(--gray-mid); letter-spacing: 0.08em; }
+  @media (max-width: 768px) {
+    .footer-inner { padding: 24px 20px; }
+  }
+</style>

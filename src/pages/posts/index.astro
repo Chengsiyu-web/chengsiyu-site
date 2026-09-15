@@ -1,0 +1,78 @@
+---
+import { site } from "../../config";
+import { getCollection } from "astro:content";
+import Base from "../../layouts/Base.astro";
+import ArticleCard from "../../components/ArticleCard.astro";
+
+const posts = (await getCollection("posts")).sort((a, b) =>
+  b.data.date.localeCompare(a.data.date)
+);
+
+const categories = [...new Set(posts.map((p) => p.data.category))];
+const allTags = [...new Set(posts.flatMap((p) => p.data.tags))];
+const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
+---
+
+<Base title={`文章 — ${NAME}`}>
+  <main class="page-main">
+    <header class="page-head reveal">
+      <p class="mono kicker">WRITING</p>
+      <h1>文章</h1>
+      <p class="count mono">{posts.length} 篇</p>
+    </header>
+
+    <nav class="taxonomy reveal" aria-label="分类与标签">
+      <div class="tax-row">
+        {categories.map((c) => <a href="#" class="mono">{c}</a>)}
+      </div>
+      <div class="tax-row tags">
+        {allTags.map((t) => <a href="#" class="mono">#{t}</a>)}
+      </div>
+    </nav>
+
+    <div class="list">
+      {
+        posts.map((p) => (
+          <ArticleCard
+            title={p.data.title}
+            excerpt={p.data.excerpt}
+            date={p.data.date}
+            category={p.data.category}
+            tags={p.data.tags}
+            href={`/posts/${p.id}/`}
+          />
+        ))
+      }
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page-main {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 96px 40px 0;
+  }
+  .page-head h1 {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    margin: 12px 0 8px;
+  }
+  .kicker { color: var(--pink); }
+  .count { color: var(--gray-mid); }
+  .taxonomy {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 20px 0;
+    margin: 40px 0 8px;
+  }
+  .tax-row { display: flex; flex-wrap: wrap; gap: 8px 24px; }
+  .tax-row a { color: var(--gray-mid); transition: color 0.2s var(--ease-out); }
+  .tax-row a:hover { color: var(--pink); }
+  .tags { padding-left: 0; }
+  @media (max-width: 768px) {
+    .page-main { padding: 56px 20px 0; }
+  }
+</style>

@@ -1,0 +1,83 @@
+---
+import { site } from "../config";
+const socials = site.socials;
+---
+
+<section class="cover">
+  <div class="cover-inner">
+    <div class="issue mono reveal">{site.issue}</div>
+    <h1 class="reveal">
+      {site.firstName}<br />
+      <span class="pink-word">{site.lastName}</span>
+    </h1>
+    <p class="tagline reveal">{site.tagline}</p>
+    <ul class="socials reveal">
+      {
+        socials.map((s) => (
+          <li>
+            <a href={s.href} class="mono u-underline">{s.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+    <a href="#latest" class="scroll-cue mono" aria-label="向下滚动查看最新文章">SCROLL ↓</a>
+  </div>
+</section>
+
+<style>
+  .cover {
+    background: var(--ink);
+    color: var(--paper);
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    position: relative;
+  }
+  .cover-inner {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 120px 40px;
+    width: 100%;
+  }
+  .issue {
+    display: inline-block;
+    background: var(--pink);
+    color: var(--ink);
+    padding: 6px 14px;
+    margin-bottom: 40px;
+  }
+  h1 {
+    font-size: clamp(3.5rem, 10vw, 8.5rem);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+  }
+  .pink-word { color: var(--pink); }
+  .tagline {
+    margin-top: 40px;
+    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    color: var(--gray-body-dark);
+    max-width: 34em;
+  }
+  .socials {
+    list-style: none;
+    display: flex;
+    gap: 28px;
+    margin-top: 48px;
+    padding-top: 24px;
+    border-top: 1px solid var(--hairline-dark);
+    max-width: 34em;
+  }
+  .socials a { color: var(--gray-dim-dark); transition: color 0.2s var(--ease-out); }
+  .socials a:hover { color: var(--pink); }
+  .scroll-cue {
+    position: absolute;
+    bottom: 32px;
+    left: 40px;
+    color: var(--gray-dim-dark);
+  }
+  @media (max-width: 768px) {
+    .cover-inner { padding: 96px 20px; }
+    .scroll-cue { left: 20px; }
+  }
+</style>

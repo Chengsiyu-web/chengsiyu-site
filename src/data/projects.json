@@ -1,0 +1,23 @@
+[
+  {
+    "name": "分镜原型",
+    "description": "占位描述：一个把想法快速变成可点原型的小工具，外链直达在线版本。",
+    "href": "https://example.com",
+    "year": "2026",
+    "image": "/images/projects/storyboard.svg"
+  },
+  {
+    "name": "每日一断",
+    "description": "占位描述：每天做一个决定的记录实验，点开即看。",
+    "href": "https://example.com",
+    "year": "2026",
+    "image": "/images/projects/daily.svg"
+  },
+  {
+    "name": "占位项目三",
+    "description": "占位描述：第三个项目卡，验证两列网格与图片排布。",
+    "href": "https://example.com",
+    "year": "2025",
+    "image": "/images/projects/placeholder-3.svg"
+  }
+]

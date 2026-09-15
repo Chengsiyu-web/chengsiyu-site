@@ -1,0 +1,53 @@
+---
+import { site } from "../../config";
+import { getCollection, render } from "astro:content";
+import Base from "../../layouts/Base.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("posts");
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base title={`${post.data.title} — ${NAME}`} description={post.data.excerpt}>
+  <main class="post-main">
+    <header class="post-head reveal">
+      <div class="meta mono">
+        <time datetime={post.data.date}>{post.data.date}</time>
+        <span>/</span>
+        <span>{post.data.category}</span>
+        <span>/</span>
+        <span>{post.data.tags.map((t) => `#${t}`).join(" ")}</span>
+      </div>
+      <h1>{post.data.title}</h1>
+    </header>
+    <article class="prose reveal">
+      <Content />
+    </article>
+    <a href="/posts/" class="mono u-underline back">← 返回全部文章</a>
+  </main>
+</Base>
+
+<style>
+  .post-main {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 96px 24px 0;
+  }
+  .post-head h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    margin-top: 16px;
+  }
+  .meta { color: var(--gray-mid); display: flex; gap: 10px; flex-wrap: wrap; }
+  .prose { margin-top: 48px; font-size: 16px; line-height: 1.8; }
+  .prose :global(h2) { font-family: var(--font-display); margin: 2.4em 0 0.8em; font-size: 1.5rem; }
+  .back { display: inline-block; margin-top: 64px; color: var(--gray-mid); }
+  .back:hover { color: var(--ink); }
+</style>

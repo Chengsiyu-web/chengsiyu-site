@@ -1,0 +1,49 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../config";
+const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
+---
+
+<Base title={`关于 — ${NAME}`}>
+  <main class="page-main">
+    <header class="page-head reveal">
+      <p class="mono kicker">ABOUT</p>
+      <h1>关于</h1>
+    </header>
+    <div class="bio reveal">
+      <p>
+        占位简介第一段：你是谁、在做什么、这个站用来放什么。两三句话说清，
+        杂志感的排版会替你把气质撑起来。
+      </p>
+      <p>
+        占位简介第二段：可以聊聊你正在做的事，或者你希望别人通过这个页面记住你的哪一面。
+      </p>
+      <ul class="contact">
+        {site.socials.map((s) => (
+          <li><a href={s.href} class="mono u-underline">{s.label}</a></li>
+        ))}
+      </ul>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page-main {
+    max-width: 44rem;
+    margin: 0 auto;
+    padding: 96px 24px 0;
+  }
+  .page-head h1 {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    margin: 12px 0 0;
+  }
+  .kicker { color: var(--pink); }
+  .bio { margin-top: 48px; border-top: 1px solid var(--hairline); padding-top: 32px; }
+  .bio p { margin-bottom: 1.2em; max-width: 65ch; }
+  .contact { list-style: none; display: flex; gap: 28px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .contact a { color: var(--gray-mid); }
+  .contact a:hover { color: var(--ink); }
+  @media (max-width: 768px) {
+    .page-main { padding: 56px 20px 0; }
+  }
+</style>

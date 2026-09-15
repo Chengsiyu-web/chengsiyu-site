@@ -1,0 +1,58 @@
+:root {
+  --ink: #141414;
+  --paper: #faf9f7;
+  --gray-mid: #6f6a63;
+  --gray-dim-dark: rgba(245, 243, 240, 0.66);
+  --gray-body-dark: rgba(245, 243, 240, 0.88);
+  --hairline: #dcd8d1;
+  --hairline-dark: rgba(245, 243, 240, 0.18);
+  --pink: #f2b8c6;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --font-display: "Playfair Display", "Songti SC", "Noto Serif SC", serif;
+  --font-body: -apple-system, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Menlo", "Consolas", monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { color-scheme: light dark; }
+html, body { background: var(--paper); color: var(--ink); font-family: var(--font-body); font-size: 15px; line-height: 1.7; }
+
+::selection { background: var(--pink); color: var(--ink); }
+
+a { color: inherit; text-decoration: none; }
+img { max-width: 100%; display: block; }
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 600; line-height: 1.15; text-wrap: balance; }
+p { text-wrap: pretty; }
+
+button, a { font-family: inherit; }
+:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-variant-numeric: tabular-nums;
+}
+
+/* 滚动显现 */
+.reveal { opacity: 0; transform: translateY(12px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .u-underline { position: relative; }
+  .u-underline::after {
+    content: ""; position: absolute; left: 0; bottom: -3px; width: 100%; height: 1px;
+    background: var(--pink); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.24s var(--ease-out);
+  }
+  .u-underline:hover::after, .u-underline:focus-visible::after { transform: scaleX(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .u-underline::after { transition: none; }
+  * { scroll-behavior: auto; }
+}
