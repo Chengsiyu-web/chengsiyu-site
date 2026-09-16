@@ -40,12 +40,16 @@ const { title, description = site.description } = Astro.props;
             }
           }
         },
-        { threshold: 0.12 }
+        { threshold: 0, rootMargin: "0px 0px -8% 0px" }
       );
       document.querySelectorAll(".reveal").forEach((el, i) => {
         el.style.transitionDelay = `${(i % 6) * 60}ms`;
         io.observe(el);
       });
+      // 兜底：3s 后任何未触发的 reveal 直接显示，防止长页面被永久隐藏
+      setTimeout(() => {
+        document.querySelectorAll(".reveal:not(.is-visible)").forEach((el) => el.classList.add("is-visible"));
+      }, 3000);
 
       // 首页：封面在视口内时导航用深色，滚出封面恢复浅色
       const nav = document.querySelector(".nav");
