@@ -54,6 +54,14 @@ const { Content } = await render(post);
     margin: 2em auto;
     border: 1px solid var(--hairline);
   }
+  .prose :global(small) {
+    display: block;
+    text-align: center;
+    color: var(--gray-mid);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    margin: -1.2em auto 2.4em;
+  }
   .prose :global(blockquote) {
     border-left: none;
     border-top: 1px solid var(--hairline);
