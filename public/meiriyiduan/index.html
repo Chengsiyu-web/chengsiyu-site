@@ -1,0 +1,1735 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+    <title>每日一断</title>
+    <style>
+      
+html {
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  word-break: break-all;
+}
+body {
+  margin: 0;
+}
+p {
+  margin-block-start: 0px;
+  margin-block-end: 0px;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+}
+table {
+  border-collapse: collapse;
+}
+table th, td {
+  text-align: left;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+}
+table th {
+  background-color: rgb(246, 246, 246);
+}
+table td {
+  font-weight: normal;
+}
+blockquote {
+  font-style: italic;
+  font-family: Georgia, Times, "Times New Roman", serif;
+  padding: 2px 0;
+  border-style: solid;
+  border-color: #ccc;
+  border-width: 0;
+  padding-left: 20px;
+  padding-right: 8px;
+  border-left-width: 5px;
+}
+
+    </style>
+    
+    <style>
+      
+    body {
+      padding: 0px 0px 0px 0px;
+    }
+  
+    </style>
+    
+    <style id="customCss">/* ===== 设计系统变量 ===== */
+:root {
+  --bg: #F0EBE0;
+  --card: #E8E2D6;
+  --ink: #2C2C2C;
+  --ink-faint: #7A756E;
+  --accent: #A94442;
+  --line: #C4BDB0;
+  --line-faint: #D8D2C8;
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 40px;
+  --space-xl: 64px;
+}
+/* ===== 全局重置 ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body {
+  width: 100%;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "LXGW WenKai", "PingFang SC", "Noto Sans SC", sans-serif;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+/* 纸质噪点纹理 */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+}
+/* ===== 墨水洇开动效 ===== */
+@keyframes inkBloom {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: blur(4px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(1px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0px);
+  }
+}
+@keyframes inkLine {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+@keyframes sealDrop {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes ripple {
+  0% {
+    transform: scale(0);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+@keyframes inkPulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+@keyframes strokeDraw {
+  0% {
+    stroke-dashoffset: 200;
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes slideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.ink-bloom {
+  animation: inkBloom 1200ms cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  opacity: 0;
+}
+.ink-delay-1 {
+  animation-delay: 0ms;
+}
+.ink-delay-2 {
+  animation-delay: 1200ms;
+}
+.ink-delay-3 {
+  animation-delay: 2400ms;
+}
+.ink-delay-4 {
+  animation-delay: 3600ms;
+}
+.ink-delay-5 {
+  animation-delay: 4800ms;
+}
+.fade-in {
+  animation: fadeIn 500ms ease forwards;
+  opacity: 0;
+}
+.slide-up {
+  animation: slideUp 600ms cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+  opacity: 0;
+}
+/* ===== 首页 ===== */
+.home-page {
+  max-width: 480px;
+  margin: 0 auto;
+  padding: var(--space-xl) var(--space-md) var(--space-lg);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.home-page.hidden {
+  display: none;
+}
+/* 历史入口 */
+.history-trigger {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  font-size: 13px;
+  color: var(--ink-faint);
+  cursor: pointer;
+  letter-spacing: 2px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: color 0.3s;
+}
+.history-trigger:hover {
+  color: var(--ink);
+}
+/* 标题区 */
+.header {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+}
+.header h1 {
+  font-family: "LXGW WenKai", serif;
+  font-size: 40px;
+  font-weight: 400;
+  letter-spacing: 10px;
+  color: var(--ink);
+  margin-bottom: var(--space-xs);
+}
+.header .sub {
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 5px;
+  opacity: 0.6;
+}
+/* 引导语 */
+.guide-text {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-bottom: var(--space-lg);
+  letter-spacing: 4px;
+  font-style: italic;
+  opacity: 0.7;
+}
+/* ===== 输入框（明显样式） ===== */
+.input-box {
+  margin-bottom: var(--space-lg);
+  position: relative;
+}
+.input-box input {
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--line-faint);
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 16px;
+  font-family: "LXGW WenKai", serif;
+  color: var(--ink);
+  outline: none;
+  text-align: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.input-box input::placeholder {
+  color: var(--ink-faint);
+  font-size: 14px;
+  font-family: "LXGW WenKai", serif;
+  opacity: 0.7;
+}
+.input-box input:focus {
+  border-color: var(--ink-faint);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+/* 输入提示 */
+.input-hint {
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-top: 8px;
+  opacity: 0.6;
+}
+/* ===== 起卦按钮（更明显） ===== */
+.cast-btn-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-lg);
+}
+.cast-btn {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 2px solid var(--line);
+  background: linear-gradient(145deg, var(--card), var(--bg));
+  color: var(--ink);
+  font-family: "LXGW WenKai", serif;
+  font-size: 22px;
+  letter-spacing: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.4s cubic-bezier(0.25, 0.1, 0.25, 1);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(44, 44, 44, 0.06), 0 1px 4px rgba(44, 44, 44, 0.04);
+}
+.cast-btn:hover {
+  border-color: var(--accent);
+  box-shadow: 0 6px 28px rgba(169, 68, 66, 0.12), 0 2px 8px rgba(44, 44, 44, 0.06);
+  transform: translateY(-2px);
+}
+.cast-btn:active {
+  transform: scale(0.96) translateY(0);
+}
+/* 按钮涟漪 */
+.cast-btn .btn-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  margin-top: -10px;
+}
+.cast-btn.clicked .btn-ripple {
+  animation: ripple 600ms ease-out forwards;
+}
+.cast-btn-hint {
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-top: 12px;
+  letter-spacing: 1px;
+  opacity: 0.6;
+}
+/* ===== Tab 切换 ===== */
+.tab-bar {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-lg);
+  margin-top: auto;
+  padding-top: var(--space-lg);
+  border-top: 1px solid var(--line-faint);
+}
+.tab {
+  font-size: 15px;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding-bottom: 8px;
+  position: relative;
+  transition: color 0.3s ease;
+  letter-spacing: 3px;
+  font-family: "LXGW WenKai", serif;
+}
+.tab.active {
+  color: var(--ink);
+}
+.tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 1px;
+}
+/* ===== 结果页（全屏新页面） ===== */
+.result-page {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 50;
+  display: none;
+  flex-direction: column;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.result-page.show {
+  display: flex;
+}
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--line-faint);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
+}
+.back-btn {
+  font-size: 14px;
+  color: var(--ink-faint);
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  transition: color 0.3s, background 0.3s;
+  font-family: "LXGW WenKai", serif;
+  letter-spacing: 1px;
+}
+.back-btn:hover {
+  color: var(--ink);
+  background: var(--card);
+}
+.result-question {
+  font-size: 15px;
+  color: var(--ink);
+  text-align: center;
+  flex: 1;
+  padding: 0 var(--space-sm);
+  font-family: "LXGW WenKai", serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.result-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-xl) var(--space-md) var(--space-lg);
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+/* 三宫结果区 */
+.gong-row {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-sm);
+  margin-bottom: var(--space-lg);
+  width: 100%;
+}
+.gong-card {
+  flex: 1;
+  max-width: 130px;
+  background: var(--card);
+  border: 1px solid var(--line-faint);
+  border-radius: 20px;
+  padding: var(--space-md) var(--space-sm);
+  text-align: center;
+  position: relative;
+}
+.gong-label {
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 2px;
+  margin-bottom: var(--space-xs);
+  font-family: "LXGW WenKai", serif;
+}
+.gong-name {
+  font-family: "LXGW WenKai", serif;
+  font-size: 28px;
+  font-weight: 400;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+.gong-wuxing {
+  font-size: 13px;
+  color: var(--ink-faint);
+  font-family: "LXGW WenKai", serif;
+}
+/* 印章 */
+.seal {
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "LXGW WenKai", serif;
+  font-size: 24px;
+  border-radius: 4px;
+  margin: var(--space-sm) auto var(--space-md);
+  opacity: 0;
+}
+.seal.show {
+  animation: sealDrop 500ms cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+/* 体用关系 */
+.tiyong {
+  text-align: center;
+  margin-bottom: var(--space-lg);
+  opacity: 0;
+  width: 100%;
+}
+.tiyong.show {
+  animation: inkBloom 700ms cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+.tiyong-label {
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: 3px;
+  margin-bottom: var(--space-xs);
+  font-family: "LXGW WenKai", serif;
+}
+.tiyong-text {
+  font-family: "LXGW WenKai", serif;
+  font-size: 20px;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.tiyong-desc {
+  font-size: 14px;
+  color: var(--ink-faint);
+  font-family: "LXGW WenKai", serif;
+}
+/* SVG 连线 */
+.tiyong-svg {
+  width: 200px;
+  height: 40px;
+  margin: var(--space-sm) auto;
+}
+.tiyong-svg line {
+  stroke: var(--line);
+  stroke-width: 1;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+}
+.tiyong-svg line.draw {
+  animation: strokeDraw 800ms ease forwards;
+}
+/* ===== AI 解读区 ===== */
+.ai-area {
+  display: none;
+  width: 100%;
+  max-width: 420px;
+}
+.ai-area.show {
+  display: block;
+}
+.ai-loading {
+  text-align: center;
+  padding: var(--space-md);
+  color: var(--ink-faint);
+  font-size: 15px;
+  font-family: "LXGW WenKai", serif;
+}
+.ai-loading .ink-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--ink-faint);
+  margin: 0 4px;
+  animation: inkPulse 1.4s ease-in-out infinite;
+}
+.ai-loading .ink-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.ai-loading .ink-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.ai-result {
+  background: var(--card);
+  border: 1px solid var(--line-faint);
+  border-radius: 20px;
+  padding: var(--space-md);
+  font-size: 15px;
+  line-height: 2;
+  color: var(--ink);
+  font-family: "LXGW WenKai", serif;
+}
+@keyframes scrollUnfurl {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+    clip-path: inset(0 0 100% 0);
+  }
+  50% {
+    opacity: 0.6;
+    transform: translateY(4px);
+    clip-path: inset(0 0 40% 0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    clip-path: inset(0 0 0% 0);
+  }
+}
+.ai-result .line {
+  opacity: 0;
+  animation: scrollUnfurl 800ms cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+/* 提示信息 */
+.hint-bar {
+  text-align: center;
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin-bottom: var(--space-md);
+  min-height: 24px;
+  font-family: "LXGW WenKai", serif;
+}
+.hint-bar .warning {
+  color: var(--accent);
+}
+/* ===== 水墨晕染过渡 ===== */
+.ink-transition {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  pointer-events: none;
+  display: none;
+}
+.ink-transition .ink-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, #2a2118 0%, #3d3328 40%, rgba(42, 33, 24, 0.85) 70%, transparent 100%);
+  transform: scale(0);
+  opacity: 0;
+  will-change: transform, opacity;
+}
+.ink-transition.active {
+  display: block;
+}
+.ink-transition.active .ink-circle {
+  animation: inkSpread 0.7s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+}
+.ink-transition.fade-out .ink-circle {
+  animation: inkFade 0.5s ease-out forwards;
+}
+@keyframes inkSpread {
+  0% {
+    transform: scale(0);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+}
+@keyframes inkFade {
+  0% {
+    opacity: 0.95;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+/* ===== 随心模式 ===== */
+.suixin-mode {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 100;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.suixin-mode.show {
+  display: flex;
+}
+.suixin-back {
+  position: absolute;
+  top: var(--space-md);
+  left: var(--space-md);
+  font-size: 15px;
+  color: var(--ink-light);
+  cursor: pointer;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+  transition: color 0.3s, background 0.3s;
+  z-index: 10;
+  white-space: nowrap;
+}
+.suixin-back:hover {
+  color: var(--ink);
+  background: var(--card);
+}
+.suixin-input-wrap {
+  width: 80%;
+  max-width: 400px;
+  margin: 20px auto 0;
+  z-index: 2;
+  position: relative;
+}
+.suixin-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px 18px;
+  border: 1px solid var(--ink-faint);
+  border-radius: 12px;
+  background: var(--card);
+  color: var(--ink);
+  font-size: 16px;
+  font-family: "LXGW WenKai", serif;
+  text-align: center;
+  letter-spacing: 2px;
+  outline: none;
+}
+.suixin-input::placeholder {
+  color: var(--ink-light);
+}
+.suixin-input:focus {
+  border-color: var(--ink-faint);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.suixin-hint {
+  font-family: "LXGW WenKai", serif;
+  font-size: 22px;
+  color: var(--ink-faint);
+  letter-spacing: 4px;
+  margin-bottom: var(--space-md);
+}
+.suixin-sub {
+  font-size: 14px;
+  color: var(--ink-faint);
+  font-family: "LXGW WenKai", serif;
+}
+.suixin-ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  pointer-events: none;
+  width: 40px;
+  height: 40px;
+  margin-left: -20px;
+  margin-top: -20px;
+}
+.suixin-ripple.active {
+  animation: ripple 800ms ease-out forwards;
+}
+/* ===== 重复检测提示 ===== */
+.duplicate-notice {
+  display: none;
+  text-align: center;
+  padding: 18px var(--space-md);
+  background: var(--card);
+  border: 1px solid var(--ink-faint);
+  border-radius: 14px;
+  margin-bottom: var(--space-md);
+  max-width: 420px;
+  width: 100%;
+  position: relative;
+}
+.duplicate-notice::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 3px;
+  background: var(--ink);
+  border-radius: 2px;
+}
+.duplicate-notice.show {
+  display: block;
+  animation: inkBloom 500ms ease forwards;
+}
+/* ===== 隐藏 ===== */
+.hidden {
+  display: none !important;
+}
+</style>
+    
+  <meta name="lx:category" content="shangou_online_e" />
+  <meta name="lx:defaultAppnm" content="">
+  <meta name="lx:cid" content="" />
+  <!-- 若希望在PV中携带自定义参数，那么设置此标签，并手动调用pageView命令 -->
+  <meta name="lx:autopv" content="off"/>
+  <!-- 配置 DNS 预解析 -->
+  
+  <script type="text/javascript">
+  // 种子代码开始
+  !(function (win, doc, ns) {
+    var cacheFunName = '_MeiTuanALogObject';
+    win[cacheFunName] = ns;
+    if (!win[ns]) {
+        var _LX = function () {
+            _LX.q.push(arguments);
+            return _LX;
+        };
+        _LX.q = _LX.q || [];
+        _LX.l = +new Date();
+        win[ns] = _LX;
+    }
+  })(window, document, 'LXAnalytics');
+  // 种子代码结束
+
+  // 获取url参数
+  function getQueryString() {
+     var data = {};
+     var query = window.location.search.substring(1);
+     var vars = query.split("&");
+     if (!query) {
+       return data;
+     }
+     for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        // 为了安全还是直接替换吧
+        data[pair[0]] = decodeURIComponent(pair[1]).replace('>', '&gt;').replace('<', '&lt;');
+     }
+     return data;
+  };
+
+  window.urlParams = getQueryString();
+
+  LXAnalytics('set', 'appnm', 'shangou_markhtml')
+  // 手动发送PV，参数分别为：pageView命令，val_lab, 环境信息，页面id
+  LXAnalytics(
+    'pageView',
+    {
+      custom: {
+        title: '每日一断',
+        url: window.location.origin + window.location.pathname,
+        visitUrl: '',
+        params: window.urlParams
+      }
+    },
+    {},
+    'c_shangou_online_e_zihnclbx');
+  </script>
+
+    
+<!-- CAT SDK（OWL）上报模块接入 -->
+
+<!-- 线上压缩版 -->
+
+-->
+
+
+
+    
+      
+    
+    
+<script>
+  var windowWidth = window.screen.availWidth;
+  var headTag = document.getElementsByTagName('head')[0];
+  if (windowWidth && windowWidth >= 1000) {
+    var styleTag = document.createElement('style');
+    styleTag.innerHTML= 'body{ width: 800px; margin: 0 auto; }';
+    headTag.appendChild(styleTag);
+  }
+  (function flexible(window, document) {
+    var docEl = document.documentElement;
+    var ratio = window.devicePixelRatio || 1;
+    function setRemUnit() {
+      if (docEl.clientWidth > 800) return;
+      var rem = docEl.clientWidth / 7.5 / 2;
+      docEl.style.fontSize = rem + 'px';
+    }
+    setRemUnit();
+    window.setTimeout(setRemUnit, 10);
+    window.addEventListener('resize', setRemUnit);
+  })(window, document);
+</script>
+  </head>
+  <body><!-- ==================== 首页 ==================== -->
+  <div class="home-page" id="homePage">
+    <div class="history-trigger" onclick="showHistory()">历史</div>
+
+    <div class="header">
+      <h1>每日一断</h1>
+      <div class="sub">小六壬 · 月日时起卦</div>
+    </div>
+
+    <div class="guide-text slide-up" style="animation-delay:200ms">
+      心有所念，起卦问天
+    </div>
+
+    <!-- 输入区 -->
+    <div class="input-box slide-up" style="animation-delay:400ms">
+      <input type="text" id="question" placeholder="在此输入你所求之事，如：明天面试结果如何" autocomplete="off">
+      <div class="input-hint">输入后点击下方「起卦」按钮</div>
+    </div>
+
+    <!-- 提示栏 -->
+    <div class="hint-bar" id="hintBar"></div>
+
+    <!-- 起卦按钮 -->
+    <div class="cast-btn-wrap slide-up" style="animation-delay:600ms">
+      <button class="cast-btn" id="castBtn" onclick="castGua()">
+        <span>起卦</span>
+        <div class="btn-ripple"></div>
+      </button>
+      <div class="cast-btn-hint">点击起卦，三宫晕染</div>
+    </div>
+
+    <!-- Tab -->
+    <div class="tab-bar">
+      <div class="tab active" data-mode="tianshi" onclick="switchTab('tianshi')">天时</div>
+      <div class="tab" data-mode="suixin" onclick="switchTab('suixin')">随心</div>
+    </div>
+  </div>
+
+  <!-- ==================== 结果页（全屏新页面） ==================== -->
+  <div class="result-page" id="resultPage">
+    <div class="result-header">
+      <div class="back-btn" onclick="goBack()">← 再问一卦</div>
+      <div class="result-question" id="resultQuestion"></div>
+      <div style="width:60px"></div>
+    </div>
+
+    <div class="result-content">
+      <!-- 重复检测提示 -->
+      <div class="duplicate-notice" id="dupNotice">
+        <div style="font-size:16px;color:var(--ink);margin-bottom:6px;font-family:LXGW WenKai,serif;letter-spacing:1px">此事今日已问过</div>
+        <div style="font-size:12.5px;color:var(--ink-faint);font-family:LXGW WenKai,serif;line-height:1.6">同一件事，一日一断。<br>可回看上断，或明日再问。</div>
+      </div>
+
+      <!-- 三宫结果 -->
+      <div class="gong-row" id="gongRow">
+        <div class="gong-card ink-bloom ink-delay-1" id="monthCard">
+          <div class="gong-label">月宫</div>
+          <div class="gong-name" id="monthGong">-</div>
+          <div class="gong-wuxing" id="monthWx">-</div>
+        </div>
+        <div class="gong-card ink-bloom ink-delay-2" id="dayCard">
+          <div class="gong-label">日宫</div>
+          <div class="gong-name" id="dayGong">-</div>
+          <div class="gong-wuxing" id="dayWx">-</div>
+        </div>
+        <div class="gong-card ink-bloom ink-delay-3" id="hourCard">
+          <div class="gong-label">时宫</div>
+          <div class="gong-name" id="hourGong">-</div>
+          <div class="gong-wuxing" id="hourWx">-</div>
+        </div>
+      </div>
+
+      <div class="seal" id="seal">断</div>
+
+      <div class="tiyong" id="tiyong">
+          <div class="tiyong-label">大势所向</div>
+        <svg class="tiyong-svg" viewBox="0 0 200 40">
+          <line x1="20" y1="20" x2="180" y2="20" id="tiyongLine"/>
+        </svg>
+        <div class="tiyong-text" id="tiyongText">-</div>
+        <div class="tiyong-desc" id="tiyongDesc">-</div>
+      </div>
+
+      <!-- AI 解读 -->
+      <div class="ai-area" id="aiArea">
+        <div class="ai-loading" id="aiLoading">
+          <span>墨思中</span>
+          <span class="ink-dot"></span>
+          <span class="ink-dot"></span>
+          <span class="ink-dot"></span>
+        </div>
+        <div class="ai-result" id="aiResult"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== 水墨晕染过渡层 ==================== -->
+<div class="ink-transition" id="inkTransition">
+  <div class="ink-circle" id="inkCircle"></div>
+</div>
+
+<!-- ==================== 随心模式全屏 ==================== -->
+  <div class="suixin-mode" id="suixinMode" onclick="suixinClick(event)">
+    <div class="suixin-back" onclick="closeSuixin(event)">← 天时</div>
+    <div class="suixin-hint">心有所念，触点天机</div>
+    <div class="suixin-input-wrap">
+      <input type="text" id="suixinQuestion" class="suixin-input" placeholder="输入你所念之事" maxlength="50" />
+    </div>
+<div class="suixin-sub" id="suixinSub">输入后，点击屏幕任意位置起卦</div>
+<div class="suixin-ripple" id="suixinRipple"></div>
+  </div>
+
+  <script>
+    // 起卦按钮事件已通过 onclick="castGua()" 绑定，无需 JS 绑定
+
+    // ==================== 配置 ====================
+    // 想接 AI 时填这三项（OpenAI 兼容接口均可，如 DeepSeek / 智谱 / 硅基流动）。
+    // 填了走 AI 断语；保持 null 走本地规则断语（无需任何 key，开箱即玩）。
+    // 注意：填了 key 的这份文件不要传到公开仓库。
+    const API_CONFIG = null; // 例：{ baseUrl: 'https://api.deepseek.com/v1', apiKey: 'sk-xxx', model: 'deepseek-chat' }
+    const AI_TIMEOUT = 15000; // AI 超时毫秒数，超时自动落本地规则
+
+    // 六神含义（用于断语生成）
+    const SHEN_INFO = {
+      '大安': { wuxing: '木', meaning: '安稳、守成、平稳发展，宜守不宜动' },
+      '留连': { wuxing: '土', meaning: '反复、拖延、纠缠、暗昧，事未定有变' },
+      '速喜': { wuxing: '火', meaning: '快速、有喜信，短期顺但后劲弱' },
+      '赤口': { wuxing: '金', meaning: '口舌、争执、破损，有突发状况' },
+      '小吉': { wuxing: '水', meaning: '小顺、得助、缓进，靠自身努力' },
+      '空亡': { wuxing: '土', meaning: '落空、不成、虚无，或无事发生' },
+    };
+    const TIYONG_DESC = {
+      '付出可得': '你主导此事，但需消耗心力，可控却费力',
+      '顺势有利': '外在条件助你，顺其自然即可，偏顺',
+      '主动推进': '你有能力掌控局面，但需主动出击',
+      '宜静观望': '外在压力较大，不宜冒进，耐心为上',
+      '平稳无波': '事态平稳，无大起伏，顺其自然',
+    };
+    const TONE_MAP = {
+      '顺势有利': '偏积极、鼓励去做',
+      '主动推进': '偏积极、鼓励主动',
+      '付出可得': '中性偏积极、可以做但要付出努力',
+      '平稳无波': '中性、顺其自然即可',
+      '宜静观望': '偏谨慎、建议等一等',
+    };
+
+    // ==================== 本地规则断语引擎 ====================
+    // 领域词典：想加领域/词，往里添就行
+    const DOMAIN_KEYWORDS = {
+      career:   ['offer', '面试', '简历', '跳槽', '离职', '辞职', '入职', '转正', '晋升', '涨薪', '加班', '工作', '老板', '导师', '汇报', '述职', '项目', '实习', '秋招', '春招', '笔试'],
+      love:     ['表白', '复合', '分手', '相亲', '恋爱', '喜欢', '暗恋', '脱单', '结婚', '对象', '吵架', '告白', '前任', 'crush'],
+      study:    ['考试', '考研', '保研', '高考', '雅思', '托福', '出分', '答辩', '论文', '答辩', '复习', '上课', '选课', '挂科'],
+      health:   ['生病', '体检', '头疼', '感冒', '失眠', '熬夜', '健身', '减肥', '跑步', '医院', '吃药', '胃', '牙'],
+      money:    ['买', '股票', '基金', '理财', '投资', '借钱', '花', '消费', '剁手', '退款', '砍价'],
+      decision: ['要不要', '该不该', '选', '去不去', '说不说', '怎么选', '纠结', '两个', '选哪个'],
+    };
+    // 领域 × 基调 的文案模板。{r1}{r2}{r3} 为三宫白话含义槽位
+    const DOMAIN_TEMPLATES = {
+      career: {
+        pos: [
+          '这事可以往前推。\n眼下节奏偏顺，{r3}。机会窗口是开着的，别自己在门口犹豫。',
+          '放心去谈。\n这阵子你的准备会被人看见，{r3}。面完别反复回想细节，等消息就好。',
+          '可以主动一点。\n这件事你有主导权，{r3}。但记得留三分余地，别把话说满。'],
+        mid: [
+          '能做，但要花心思。\n这事得你自己推着走，{r3}。别人帮不上太多，心理预期放平。',
+          '做可以，别指望一路顺。\n中间会有反复，{r3}。把它当长跑而不是冲刺。'],
+        caution: [
+          '建议再等等。\n现在外部条件不算成熟，{r3}。不是让你放弃，是让你把材料再磨一周。',
+          '先别急着给答复。\n此事急不得，{r3}。等下一个时机，话事权会回到你手上。'],
+      },
+      love: {
+        pos: [
+          '值得说出口。\n这阵子你有顺水的势头，{r3}。哪怕结果未知，说出口本身就是好事。',
+          '可以试着靠近。\n你们之间有互动的余地，{r3}。别设计太多环节，自然一点。'],
+        mid: [
+          '能聊，但别把期待拉满。\n这事需要时间发酵，{r3}。给对方一点空间，也给自己一点。',
+          '顺其自然。\n现在不是摊牌的时机，{r3}。先把日子过好，答案会自己浮出来。'],
+        caution: [
+          '先缓一缓。\n现在情绪和时机都偏紧，{r3}。冲动说出的话收不回来，过两天再决定。',
+          '这事先放下。\n眼下纠缠不出结果，{r3}。该是你的跑不掉，不是你的抓不住。'],
+      },
+      study: {
+        pos: [
+          '状态在线，可以冲。\n这阵子学东西吸收快，{r3}。考前最后一周别熬夜，规律作息比多刷一套题值钱。',
+          '复习节奏没问题。\n你的努力正在见效，{r3}。保持节奏，别被别人的进度打乱。'],
+        mid: [
+          '能过，但要沉住气。\n过程会有点磨人，{r3}。别对答案，考完一科丢一科。',
+          '进度可以，效率一般。\n这段学习偏枯燥，{r3}。换个环境试试，图书馆比宿舍强。'],
+        caution: [
+          '这轮别硬考。\n准备还不算充分，{r3}。要么推迟一战，要么把目标降半档，都不可耻。',
+          '先调状态再谈分数。\n眼下心思散，{r3}。把手机放远一点，比多背五十个单词有用。'],
+      },
+      health: {
+        pos: [
+          '问题不大。\n身体底子扛得住，{r3}。但小信号别硬扛，该看就看，别拖成大事。',
+          '可以正常锻炼。\n身体在恢复通道里，{r3}。注意别上头加量。'],
+        mid: [
+          '注意休息。\n这事跟劳累有关，{r3}。今晚早点睡，比什么补品都管用。',
+          '老毛病又来了。\n它是在提醒你别透支，{r3}。预约个体检，图个安心。'],
+        caution: [
+          '这事要当回事。\n身体给的信号别轻视，{r3}。这周就去医院，别拖到「有空再说」。',
+          '先停下来。\n身体在报警，{r3}。把强度降下来，休息不是浪费。'],
+      },
+      money: {
+        pos: [
+          '可以买。\n这笔花出去不亏，{r3}。但要设个上限，超了就收手。',
+          '值得入手。\n时机和价格都还行，{r3}。买完别再反复比价。'],
+        mid: [
+          '能买，但等一等。\n价格不算甜，{r3}。放购物车里躺三天，还想要再下单。',
+          '可买可不买。\n冲动成分居多，{r3}。问问自己：没有它，下周会想它吗？'],
+        caution: [
+          '先别下单。\n这波消费冲动偏强，{r3}。今天不买明天再说，多半就不想要了。',
+          '捂好钱包。\n这钱花出去大概率后悔，{r3}。想花的时候先睡一觉。'],
+      },
+      decision: {
+        pos: [
+          '选你心里偏好的那个。\n两个选项差别没那么大，{r3}。选完不回头比选对更重要。',
+          '可以定下来。\n此刻的直觉是可靠的，{r3}。纠结超过三天，答案其实已经有了。'],
+        mid: [
+          '都能选，差别在后面。\n不管选哪个都有得有失，{r3}。选你能承受其坏处的那个。',
+          '不急着今天定。\n信息还不够，{r3}。周五之前给自己一个 deadline。'],
+        caution: [
+          '都先放一放。\n两个选项眼下都有坑，{r3}。不是二选一，去发现第三个选项。',
+          '别在今天做决定。\n情绪参与了投票，{r3}。睡一觉，明天上午再想。'],
+      },
+      general: {
+        pos: [
+          '可以去做。\n眼下势头偏顺，{r3}。既然问了就说明想动，那就动。',
+          '放心去。\n事情会自己往顺的方向走，{r3}。你只需要正常发挥。'],
+        mid: [
+          '可以做，平常心。\n过程平平，{r3}。别期待惊喜，也不会有惊吓。',
+          '顺其自然。\n结果取决于你投入几分，{r3}。做了就别惦记。'],
+        caution: [
+          '不急，等一等。\n时机未到，{r3}。等不是放弃，是换个日子再出发。',
+          '这事先放放。\n眼下强推容易卡，{r3}。过两天再看，局面会不一样。'],
+      },
+    };
+
+    function detectDomain(question) {
+      const q = question.toLowerCase();
+      let best = null, bestHits = 0;
+      for (const [dom, words] of Object.entries(DOMAIN_KEYWORDS)) {
+        let hits = 0;
+        for (const w of words) if (q.includes(w.toLowerCase())) hits++;
+        if (hits > bestHits) { best = dom; bestHits = hits; }
+      }
+      return best || 'general';
+    }
+
+    function toneToTier(tiYong) {
+      if (tiYong === '顺势有利' || tiYong === '主动推进') return 'pos';
+      if (tiYong === '宜静观望') return 'caution';
+      return 'mid';
+    }
+
+    function localInterpretation(question, monthGong, dayGong, hourGong, tiYong) {
+      const mInfo = SHEN_INFO[monthGong] || { meaning: '事有起因' };
+      const dInfo = SHEN_INFO[dayGong] || { meaning: '过程推进' };
+      const hInfo = SHEN_INFO[hourGong] || { meaning: '结果渐显' };
+      const domain = detectDomain(question);
+      const tier = toneToTier(tiYong);
+      const pool = DOMAIN_TEMPLATES[domain][tier];
+      const tpl = pool[Math.floor(Math.random() * pool.length)];
+      // 三宫白话（用于槽位）
+      const r1 = '起因上：' + mInfo.meaning;
+      const r2 = '过程中：' + dInfo.meaning;
+      const r3 = '走向上：' + hInfo.meaning + '，' + (TIYONG_DESC[tiYong] || '');
+      return tpl.replace('{r3}', r3.replace('走向上：', ''));
+    }
+
+    // ==================== 断语生成统一入口 ====================
+    async function generateInterpretation(question, monthGong, dayGong, hourGong, tiYong) {
+      if (API_CONFIG) {
+        try {
+          return await Promise.race([
+            callRemoteAI(question, monthGong, dayGong, hourGong, tiYong),
+            new Promise((_, rej) => setTimeout(() => rej(new Error('timeout')), AI_TIMEOUT)),
+          ]);
+        } catch (e) {
+          // AI 失败/超时 → 落本地规则
+        }
+      }
+      // 跟随三宫动画节奏：盖印(3.2s)后再出断语，模拟"墨思"的仪式感
+      await new Promise(r => setTimeout(r, 3400 + Math.random() * 1200));
+      return localInterpretation(question, monthGong, dayGong, hourGong, tiYong);
+    }
+
+    async function callRemoteAI(question, monthGong, dayGong, hourGong, tiYong) {
+      const mInfo = SHEN_INFO[monthGong] || { meaning: '' };
+      const dInfo = SHEN_INFO[dayGong] || { meaning: '' };
+      const hInfo = SHEN_INFO[hourGong] || { meaning: '' };
+      const tyDesc = TIYONG_DESC[tiYong] || '';
+      const toneDirective = TONE_MAP[tiYong] || '中性';
+
+      const systemPrompt = `你是一位温润的解卦人，精通小六壬。\n\n你的工作方式：\n1. 先认真理解用户问的是什么事，这件事对用户有多重要。\n2. 结合三宫含义和体用关系，给出贴合这件具体事情的建议。\n3. 小事（喝咖啡、吃什么）说得轻松随意；大事（面试、感情、健康）说得认真贴心。\n4. 语气像朋友随口一说，不贩卖焦虑，不给绝对指令。\n\n【约束】\n- 不提五行、六神名称、术语、算法、农历、卦象。用户只看到自然语言的建议。\n- 不用"吉""凶""大吉大利"等绝对词。\n- 全文 200 字以内。`;
+
+      const userPrompt = `用户问：${question}\n\n卦象信息（你用于理解，不要向用户提及）：\n- 起因：${mInfo.meaning}\n- 过程：${dInfo.meaning}\n- 结果：${hInfo.meaning}\n- 总势：${tyDesc}\n\n★★ 你的回答情绪基调必须是【${toneDirective}】。这是算定的结果，不得违背。★★\n\n请回答以下三段（每段一行，换行分隔，不用序号或标题）：\n- 第一段：直接回答用户的问题（建议做/不做，顺/不顺），一句话。\n- 第二段：简短解释为什么（用大白话，不提术语）。\n- 第三段：一句贴心的小提醒。\n\n直接写内容，不要加"第一段""- ""1."等任何前缀。`;
+
+      const res = await fetch(`${API_CONFIG.baseUrl}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${API_CONFIG.apiKey}`,
+        },
+        body: JSON.stringify({
+          model: API_CONFIG.model,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+          temperature: 0.7,
+          max_tokens: 600,
+        }),
+      });
+
+      if (!res.ok) throw new Error(`API ${res.status}`);
+      const data = await res.json();
+      let text = data.choices[0].message.content;
+      text = text
+        .replace(/从卦象来看[，,]?/g, '')
+        .replace(/卦象(显示|表明|来看|中)?[，,]?/g, '')
+        .replace(/^\s*[-•]\s*/gm, '')
+        .replace(/^\s*\d+[.、]\s*(结论|说理|取势|叮咛|第.段)[：:]\s*/gm, '')
+        .replace(/^\s*第.段[：:]\s*/gm, '')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+      return text;
+    }
+
+    // 停用字（用于关键词重叠判定）
+    const STOP_CHARS = new Set('的了吗呢吧啊我你他她它是会能可以要想知还也就都很不没么怎如何个这那以于在有无为被把给对跟和与或但而'.split(''));
+
+    function extractKeywords(q) {
+      const grams = new Set();
+      const runs = q.match(/[\u4e00-\u9fff]{2,}/g) || [];
+      for (const run of runs) {
+        for (let i = 0; i <= run.length - 2; i++) {
+          const g = run.slice(i, i + 2);
+          if (STOP_CHARS.has(g[0]) || STOP_CHARS.has(g[1])) continue;
+          grams.add(g);
+        }
+      }
+      return grams;
+    }
+
+    // ==================== 前端 AI 调用 ====================
+    async function callFridayAI(question, monthGong, dayGong, hourGong, tiYong) {
+      const mInfo = SHEN_INFO[monthGong] || { meaning: '' };
+      const dInfo = SHEN_INFO[dayGong] || { meaning: '' };
+      const hInfo = SHEN_INFO[hourGong] || { meaning: '' };
+      const tyDesc = TIYONG_DESC[tiYong] || '';
+      const toneDirective = TONE_MAP[tiYong] || '中性';
+
+      const systemPrompt = `你是一位温润的解卦人，精通小六壬。\n\n你的工作方式：\n1. 先认真理解用户问的是什么事，这件事对用户有多重要。\n2. 结合三宫含义和体用关系，给出贴合这件具体事情的建议。\n3. 小事（喝咖啡、吃什么）说得轻松随意；大事（面试、感情、健康）说得认真贴心。\n4. 语气像朋友随口一说，不贩卖焦虑，不给绝对指令。\n\n【约束】\n- 不提五行、六神名称、术语、算法、农历、卦象。用户只看到自然语言的建议。\n- 不用"吉""凶""大吉大利"等绝对词。\n- 全文 200 字以内。`;
+
+      const userPrompt = `用户问：${question}\n\n卦象信息（你用于理解，不要向用户提及）：\n- 起因：${mInfo.meaning}\n- 过程：${dInfo.meaning}\n- 结果：${hInfo.meaning}\n- 总势：${tyDesc}\n\n★★ 你的回答情绪基调必须是【${toneDirective}】。这是算定的结果，不得违背。★★\n\n请回答以下三段（每段一行，换行分隔，不用序号或标题）：\n- 第一段：直接回答用户的问题（建议做/不做，顺/不顺），一句话。\n- 第二段：简短解释为什么（用大白话，不提术语）。\n- 第三段：一句贴心的小提醒。\n\n直接写内容，不要加"第一段""- ""1."等任何前缀。`;
+
+      const res = await fetch(`${FRIDAY_BASE_URL}/chat/completions`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${FRIDAY_APP_ID}`,
+        },
+        body: JSON.stringify({
+          model: CHAT_MODEL,
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: userPrompt },
+          ],
+          temperature: 0.7,
+          max_tokens: 600,
+        }),
+      });
+
+      if (!res.ok) throw new Error(`API ${res.status}`);
+      const data = await res.json();
+      let text = data.choices[0].message.content;
+
+      // 后处理：清理术语和格式前缀
+      text = text
+        .replace(/从卦象来看[，,]?/g, '')
+        .replace(/卦象(显示|表明|来看|中)?[，,]?/g, '')
+        .replace(/^\s*[-•]\s*/gm, '')
+        .replace(/^\s*\d+[.、]\s*(结论|说理|取势|叮咛|第.段)[：:]\s*/gm, '')
+        .replace(/^\s*第.段[：:]\s*/gm, '')
+        .replace(/\n{3,}/g, '\n\n')
+        .trim();
+
+      return text;
+    }
+
+    // ==================== localStorage 重复检测 ====================
+    function getTodayKey() {
+      const d = new Date();
+      return `meiri_history_${d.getFullYear()}_${d.getMonth()}_${d.getDate()}`;
+    }
+
+    function getTodayHistory() {
+      try {
+        return JSON.parse(localStorage.getItem(getTodayKey()) || '[]');
+      } catch { return []; }
+    }
+
+    function saveDivination(question, monthGong, dayGong, hourGong, tiYong, interpretation) {
+      const history = getTodayHistory();
+      history.push({ question, monthGong, dayGong, hourGong, tiYong, interpretation, time: Date.now() });
+      localStorage.setItem(getTodayKey(), JSON.stringify(history));
+    }
+
+    function checkSimilarLocal(question) {
+      const history = getTodayHistory();
+      if (history.length === 0) return null;
+      const currentKw = extractKeywords(question);
+      for (const item of history) {
+        const histKw = extractKeywords(item.question);
+        let shared = 0;
+        for (const k of currentKw) {
+          if (histKw.has(k)) shared++;
+        }
+        if (shared >= 2) return item;
+      }
+      return null;
+    }
+
+    const SHEN = [
+      { name: '大安', wuxing: '木', desc: '安稳、静、顺利' },
+      { name: '留连', wuxing: '土', desc: '拖延、停滞、犹豫' },
+      { name: '速喜', wuxing: '火', desc: '快速、喜事、消息' },
+      { name: '赤口', wuxing: '金', desc: '口舌、争执、破损' },
+      { name: '小吉', wuxing: '水', desc: '小顺、贵人、缓进' },
+      { name: '空亡', wuxing: '土', desc: '落空、无结果、等待' }
+    ];
+    const DIZHI = ['子','丑','寅','卯','辰','巳','午','未','申','酉','戌','亥'];
+
+    // ==================== 状态 ====================
+    let currentMode = 'tianshi';
+    let currentGua = null;
+    let isCasting = false;
+
+    // ==================== 小六壬算法 ====================
+    function getHourZhiIndex(hour) {
+      if (hour >= 23 || hour < 1) return 0;
+      if (hour < 3) return 1;
+      if (hour < 5) return 2;
+      if (hour < 7) return 3;
+      if (hour < 9) return 4;
+      if (hour < 11) return 5;
+      if (hour < 13) return 6;
+      if (hour < 15) return 7;
+      if (hour < 17) return 8;
+      if (hour < 19) return 9;
+      if (hour < 21) return 10;
+      return 11;
+    }
+
+    function xiaoLiuRen(lunarMonth, lunarDay, hourIndex) {
+      const monthIdx = (lunarMonth - 1) % 6;
+      const dayIdx = (monthIdx + lunarDay - 1) % 6;
+      const hourIdx = (dayIdx + hourIndex) % 6;
+      return {
+        month: SHEN[monthIdx],
+        day: SHEN[dayIdx],
+        hour: SHEN[hourIdx],
+        monthIdx, dayIdx, hourIdx
+      };
+    }
+
+    function tiYongRelation(monthShen, hourShen) {
+      const sheng = { '木':'火','火':'土','土':'金','金':'水','水':'木' };
+      const ke = { '木':'土','土':'水','水':'火','火':'金','金':'木' };
+      const m = monthShen.wuxing;
+      const h = hourShen.wuxing;
+      if (sheng[m] === h) return { text: '付出可得', display: '可以，但要花心思', desc: '你主导此事，但需消耗心力，可控却费力' };
+      if (sheng[h] === m) return { text: '顺势有利', display: '放心去做', desc: '外在条件助你，顺其自然即可' };
+      if (ke[m] === h) return { text: '主动推进', display: '主动一些会更好', desc: '你有能力掌控局面，但需主动出击' };
+      if (ke[h] === m) return { text: '宜静观望', display: '不急，再等等', desc: '外在压力较大，不宜冒进，耐心为上' };
+      return { text: '平稳无波', display: '顺其自然就好', desc: '事态平稳，无大起伏，顺其自然' };
+    }
+
+    // ==================== 农历转换 ====================
+    function getLunarInfo(date) {
+      const lunar = Lunar.fromDate(date);
+      return {
+        year: lunar.getYear(),
+        month: lunar.getMonth(),
+        day: lunar.getDay(),
+        hourZhi: DIZHI[getHourZhiIndex(date.getHours())],
+        ganZhiYear: lunar.getYearInGanZhi()
+      };
+    }
+
+    // ==================== 页面切换 ====================
+    function showResultPage() {
+      document.getElementById('homePage').style.display = 'none';
+      document.getElementById('resultPage').style.display = 'flex';
+      window.scrollTo(0, 0);
+    }
+
+    function inkTransitionToResult() {
+      return new Promise(resolve => {
+        const overlay = document.getElementById('inkTransition');
+        const circle = document.getElementById('inkCircle');
+        const btn = document.getElementById('castBtn');
+        const rect = btn.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+
+        // 计算需要覆盖全屏的圆的直径
+        const maxDist = Math.max(
+          Math.hypot(cx, cy),
+          Math.hypot(window.innerWidth - cx, cy),
+          Math.hypot(cx, window.innerHeight - cy),
+          Math.hypot(window.innerWidth - cx, window.innerHeight - cy)
+        ) * 2;
+
+        circle.style.width = maxDist + 'px';
+        circle.style.height = maxDist + 'px';
+        circle.style.left = (cx - maxDist / 2) + 'px';
+        circle.style.top = (cy - maxDist / 2) + 'px';
+
+        overlay.className = 'ink-transition active';
+
+        // 墨圆铺满后，在墨色遮罩下切换页面，再淡出
+        setTimeout(() => {
+          showResultPage();
+          overlay.classList.add('fade-out');
+          overlay.classList.remove('active');
+          setTimeout(() => {
+            overlay.className = 'ink-transition';
+            resolve();
+          }, 500);
+        }, 700);
+      });
+    }
+
+function goBack() {
+document.getElementById('resultPage').style.display = 'none';
+document.getElementById('homePage').style.display = 'flex';
+resetResultPage();
+document.getElementById('question').value = '';
+document.getElementById('suixinQuestion').value = '';
+// 重置为天时模式
+currentMode = 'tianshi';
+document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.mode === 'tianshi'));
+window.scrollTo(0, 0);
+}
+
+    function closeSuixin(e) {
+      e.stopPropagation();
+      document.getElementById('suixinMode').classList.remove('show');
+      // 切回天时
+      currentMode = 'tianshi';
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.mode === 'tianshi'));
+      // 把随心输入框的值同步回首页
+      const sq = document.getElementById('suixinQuestion').value.trim();
+      if (sq) document.getElementById('question').value = sq;
+    }
+
+    // ==================== UI 控制 ====================
+    function switchTab(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.mode === mode));
+      if (mode === 'suixin') {
+        // 把首页输入框的值同步到随心输入框
+        const q = document.getElementById('question').value.trim();
+        document.getElementById('suixinQuestion').value = q;
+        document.getElementById('suixinMode').classList.add('show');
+      }
+    }
+
+    function resetResultPage() {
+      document.getElementById('dupNotice').classList.remove('show');
+      document.getElementById('seal').classList.remove('show');
+      document.getElementById('tiyong').classList.remove('show');
+      document.getElementById('tiyongLine').classList.remove('draw');
+      document.getElementById('aiArea').classList.remove('show');
+      document.getElementById('aiLoading').style.display = 'block';
+      document.getElementById('aiResult').innerHTML = '';
+
+      // 重置三宫动画
+      ['monthCard','dayCard','hourCard'].forEach(id => {
+        const el = document.getElementById(id);
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = '';
+      });
+
+      currentGua = null;
+      isCasting = false;
+    }
+
+    function setHint(text, isWarning) {
+      const bar = document.getElementById('hintBar');
+      bar.innerHTML = isWarning ? `<span class="warning">${text}</span>` : text;
+      if (text) {
+        setTimeout(() => { bar.innerHTML = ''; }, 3000);
+      }
+    }
+
+    // 由历史记录（仅含神名）还原完整卦象，供重复命中时回看
+    function guaFromHistory(history) {
+      const find = (name) => SHEN.find(s => s.name === name) || { name, wuxing: '', desc: '' };
+      return {
+        month: find(history.month.name),
+        day: find(history.day.name),
+        hour: find(history.hour.name),
+        tiYong: history.tiYong,
+        lunarText: '回看旧卦'
+      };
+    }
+
+    // ==================== 起卦主流程 ====================
+    async function castGua() {
+      if (isCasting) return;
+      const question = document.getElementById('question').value.trim();
+      if (!question) {
+        setHint('请先输入你所念之事', true);
+        return;
+      }
+
+      // 随心模式由全屏界面直接触发，不走起卦按钮
+
+      // 时辰限制：同一时辰内最多3卦（天时模式下同一时辰结果相同）
+      const now = new Date();
+      const hourZhiIdx = getHourZhiIndex(now.getHours());
+      const shichenKey = now.toDateString() + '_' + hourZhiIdx;
+      const stored = localStorage.getItem('meiri_count');
+      const storedKey = localStorage.getItem('meiri_shichen');
+      let count = 0;
+      if (storedKey === shichenKey && stored) count = parseInt(stored);
+      if (count >= 3) {
+        setHint('此时辰已起三卦，过犹不及，静待下一时辰', true);
+        return;
+      }
+
+      // ★ 重复检测前置：今日同事项已问过 → 首页轻提示，不进结果页
+      const dupItem = checkSimilarLocal(question);
+      if (dupItem) {
+        setHint('此事今日已问，一日一断', false);
+        isCasting = false;
+        return;
+      }
+
+      isCasting = true;
+
+      // 按钮涟漪
+      const btn = document.getElementById('castBtn');
+      btn.classList.add('clicked');
+      setTimeout(() => btn.classList.remove('clicked'), 600);
+
+      // 水墨晕染过渡 → 显示结果页
+      document.getElementById('resultQuestion').textContent = question;
+      await inkTransitionToResult();
+      resetResultPage();
+
+      // 未重复 → 计入此时辰次数
+      localStorage.setItem('meiri_count', (count + 1).toString());
+      localStorage.setItem('meiri_shichen', shichenKey);
+
+      // Step 2: 排卦（复用上方 now）
+      const lunar = getLunarInfo(now);
+      const hourIdx = getHourZhiIndex(now.getHours());
+      currentGua = xiaoLiuRen(lunar.month, lunar.day, hourIdx);
+      currentGua.lunarText = `${lunar.ganZhiYear}年 ${lunar.month}月${lunar.day}日 ${lunar.hourZhi}时`;
+
+      // Step 3: 展示卦象
+      showGuaResult(currentGua, true);
+
+      // Step 4: 请求 AI 解读
+      document.getElementById('aiArea').classList.add('show');
+
+      try {
+        const rel = tiYongRelation(currentGua.month, currentGua.hour);
+        const interpretation = await generateInterpretation(
+          question,
+          currentGua.month.name,
+          currentGua.day.name,
+          currentGua.hour.name,
+          rel.text
+        );
+        document.getElementById('aiLoading').style.display = 'none';
+        renderAIResult(interpretation);
+        saveDivination(question, currentGua.month.name, currentGua.day.name, currentGua.hour.name, rel.text, interpretation);
+      } catch (e) {
+        document.getElementById('aiLoading').style.display = 'none';
+        renderAIResult('墨思暂滞，请稍后再试。\n\n此时三宫已明，可据此自参：' +
+          `\n月宫${currentGua.month.name}为体，${currentGua.month.desc}；` +
+          `\n时宫${currentGua.hour.name}为用，${currentGua.hour.desc}。`);
+      }
+
+      isCasting = false;
+    }
+
+    function showGuaResult(gua, animate) {
+      document.getElementById('monthGong').textContent = gua.month.name || gua.monthGong;
+      document.getElementById('monthWx').textContent = gua.month.wuxing || '';
+      document.getElementById('dayGong').textContent = gua.day.name || gua.dayGong;
+      document.getElementById('dayWx').textContent = gua.day.wuxing || '';
+      document.getElementById('hourGong').textContent = gua.hour.name || gua.hourGong;
+      document.getElementById('hourWx').textContent = gua.hour.wuxing || '';
+
+      const rel = tiYongRelation(
+        typeof gua.month === 'string' ? SHEN.find(s => s.name === gua.month) || gua.month : gua.month,
+        typeof gua.hour === 'string' ? SHEN.find(s => s.name === gua.hour) || gua.hour : gua.hour
+      );
+      // 展示大白话：历史回看时把术语翻译回 display
+      const DISPLAY_MAP = {
+        '付出可得': '可以，但要花心思',
+        '顺势有利': '放心去做',
+        '主动推进': '主动一些会更好',
+        '宜静观望': '不急，再等等',
+        '平稳无波': '顺其自然就好',
+      };
+      if (gua.tiYong) {
+        document.getElementById('tiyongText').textContent = DISPLAY_MAP[gua.tiYong] || gua.tiYong;
+      } else {
+        document.getElementById('tiyongText').textContent = rel.display || rel.text;
+      }
+      document.getElementById('tiyongDesc').textContent = rel.desc;
+
+      if (animate) {
+        setTimeout(() => document.getElementById('seal').classList.add('show'), 3200);
+        setTimeout(() => {
+          document.getElementById('tiyong').classList.add('show');
+          setTimeout(() => document.getElementById('tiyongLine').classList.add('draw'), 400);
+        }, 4200);
+      } else {
+        document.getElementById('seal').classList.add('show');
+        document.getElementById('tiyong').classList.add('show');
+        document.getElementById('tiyongLine').classList.add('draw');
+      }
+    }
+
+    function renderAIResult(text) {
+      const container = document.getElementById('aiResult');
+      const lines = text.split('\n').filter(l => l.trim());
+      container.innerHTML = '';
+      lines.forEach((line, i) => {
+        const div = document.createElement('div');
+        div.className = 'line';
+        div.style.animationDelay = `${i * 450}ms`;
+        div.textContent = line;
+        container.appendChild(div);
+      });
+    }
+
+    // ==================== 随心模式 ====================
+    async function suixinClick(e) {
+      if (e.target.closest('.suixin-back')) return;
+      if (e.target.closest('.suixin-input-wrap')) return;
+      if (isCasting) return;
+
+      const question = document.getElementById('suixinQuestion').value.trim();
+      if (!question) {
+        // 聚焦输入框提示用户先输入
+        document.getElementById('suixinQuestion').focus();
+        document.getElementById('suixinQuestion').setAttribute('placeholder', '请先输入你所念之事');
+        return;
+      }
+
+      // 日限检查
+      const today = new Date().toDateString();
+      const stored = localStorage.getItem('meiri_count');
+      const storedDate = localStorage.getItem('meiri_date');
+      let count = 0;
+      if (storedDate === today && stored) count = parseInt(stored);
+
+      // ★ 重复检测前置：命中 → 随心界面轻提示，不起卦、不进结果页
+      const dupItem = checkSimilarLocal(question);
+      if (dupItem) {
+        const subEl = document.getElementById('suixinSub');
+        subEl.textContent = '此事今日已问，一日一断';
+        subEl.style.color = 'var(--ink)';
+        setTimeout(() => { subEl.textContent = '输入后，点击屏幕任意位置起卦'; subEl.style.color = ''; }, 3000);
+        isCasting = false;
+        return;
+      }
+
+      isCasting = true;
+
+      // 涟漪动画
+      const ripple = document.getElementById('suixinRipple');
+      ripple.style.left = e.clientX + 'px';
+      ripple.style.top = e.clientY + 'px';
+      ripple.classList.remove('active');
+      void ripple.offsetWidth;
+      ripple.classList.add('active');
+
+      const randomNum = (e.clientX + e.clientY + Date.now()) % 6;
+      const suixinGua = {
+        month: SHEN[randomNum],
+        day: SHEN[(randomNum + 2) % 6],
+        hour: SHEN[(randomNum + 4) % 6],
+        lunarText: '随心起卦'
+      };
+
+      // 计入次数
+      localStorage.setItem('meiri_count', (count + 1).toString());
+      localStorage.setItem('meiri_date', today);
+
+      setTimeout(() => {
+        document.getElementById('suixinMode').classList.remove('show');
+        currentGua = suixinGua;
+
+        // 进入结果页
+        document.getElementById('resultQuestion').textContent = question;
+        showResultPage();
+        resetResultPage();
+        showGuaResult(suixinGua, true);
+
+        // 请求 AI 解读
+        document.getElementById('aiArea').classList.add('show');
+        const suixinRel = tiYongRelation(suixinGua.month, suixinGua.hour);
+        generateInterpretation(question, suixinGua.month.name, suixinGua.day.name, suixinGua.hour.name, suixinRel.text)
+          .then(interpretation => {
+            document.getElementById('aiLoading').style.display = 'none';
+            renderAIResult(interpretation);
+            saveDivination(question, suixinGua.month.name, suixinGua.day.name, suixinGua.hour.name, suixinRel.text, interpretation);
+          }).catch(() => {
+            document.getElementById('aiLoading').style.display = 'none';
+            renderAIResult('墨思暂滞，请稍后再试。');
+          }).finally(() => {
+            isCasting = false;
+          });
+      }, 800);
+    }
+
+    // ==================== 历史 ====================
+    function showHistory() {
+      alert('历史记录功能开发中');
+    }
+  </script></body>
+  
+  
+  
+  
+  
+  <script id="customJs">"use strict";
+var d = document;
+var l1 = d.createElement('link');
+l1.rel = 'preconnect';
+l1.href = 'https://cdn.jsdelivr.net';
+d.head.appendChild(l1);
+var l2 = d.createElement('link');
+l2.rel = 'stylesheet';
+l2.href = 'https://cdn.jsdelivr.net/npm/lxgw-wenkai-webfont@1.7.0/style.css';
+d.head.appendChild(l2);
+var s = d.createElement('script');
+s.src = 'https://cdn.jsdelivr.net/npm/lunar-javascript@1.6.12/lunar.min.js';
+d.head.appendChild(s);</script>
+</html>
