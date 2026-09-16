@@ -18,6 +18,16 @@ const latest = posts.slice(0, 3);
   <Hero />
 
   <main class="home-main">
+    <section class="section">
+      <header class="section-head reveal">
+        <h2>在做的项目</h2>
+        <a href="/projects/" class="mono u-underline">全部项目 →</a>
+      </header>
+      <div class="grid">
+        {projects.map((p) => <ProjectCard {...p} />)}
+      </div>
+    </section>
+
     <section id="latest" class="section">
       <header class="section-head reveal">
         <h2>最近写作</h2>
@@ -36,16 +46,6 @@ const latest = posts.slice(0, 3);
             />
           ))
         }
-      </div>
-    </section>
-
-    <section class="section">
-      <header class="section-head reveal">
-        <h2>在做的项目</h2>
-        <a href="/projects/" class="mono u-underline">全部项目 →</a>
-      </header>
-      <div class="grid">
-        {projects.map((p) => <ProjectCard {...p} />)}
       </div>
     </section>
   </main>
