@@ -8,7 +8,7 @@
   },
   {
     "name": "每日一断",
-    "description": "占位描述：每天做一个决定的记录实验，点开即看。",
+    "description": "基于小六壬的每日决策小工具，遇事不决来断一下。",
     "href": "/meiriyiduan/index.html",
     "year": "2026",
     "image": "/images/projects/daily-real.png"
