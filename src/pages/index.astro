@@ -7,6 +7,7 @@ import ProjectCard from "../components/ProjectCard.astro";
 import projects from "../data/projects.json";
 import { site } from "../config";
 const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 
 const posts = (await getCollection("posts")).sort((a, b) =>
   b.data.date.localeCompare(a.data.date)
@@ -21,7 +22,7 @@ const latest = posts.slice(0, 3);
     <section class="section">
       <header class="section-head reveal">
         <h2>在做的项目</h2>
-        <a href="/projects/" class="mono u-underline">全部项目 →</a>
+        <a href={`${base}/projects/`} class="mono u-underline">全部项目 →</a>
       </header>
       <div class="grid">
         {projects.map((p) => <ProjectCard {...p} />)}
@@ -31,7 +32,7 @@ const latest = posts.slice(0, 3);
     <section id="latest" class="section">
       <header class="section-head reveal">
         <h2>最近写作</h2>
-        <a href="/posts/" class="mono u-underline">全部文章 →</a>
+        <a href={`${base}/posts/`} class="mono u-underline">全部文章 →</a>
       </header>
       <div class="list">
         {
@@ -42,7 +43,7 @@ const latest = posts.slice(0, 3);
               date={p.data.date}
               category={p.data.category}
               tags={p.data.tags}
-              href={`/posts/${p.id}/`}
+              href={`${base}/posts/${p.id}/`}
             />
           ))
         }
@@ -60,8 +61,8 @@ const latest = posts.slice(0, 3);
   .section { margin-top: 128px; }
   .grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    column-gap: 64px;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 40px;
   }
   .section-head {
     display: flex;

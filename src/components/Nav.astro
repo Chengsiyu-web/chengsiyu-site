@@ -1,8 +1,9 @@
 ---
 import { site } from "../config";
 const path = Astro.url.pathname;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 const isActive = (p: string) =>
-  p === "/" ? path === "/" : path.startsWith(p);
+  p === "/" ? path === base + "/" : path.startsWith(base + p);
 
 const links = [
   { href: "/", label: "首页", en: "INDEX" },
@@ -10,17 +11,18 @@ const links = [
   { href: "/projects/", label: "项目", en: "WORK" },
   { href: "/about/", label: "关于", en: "ABOUT" },
 ];
+const withBase = (href: string) => base + href;
 ---
 
 <header class="nav">
   <nav class="nav-inner">
-    <a href="/" class="brand mono">{`${site.firstName} ${site.lastName}`.toUpperCase()}</a>
+    <a href={withBase("/")} class="brand mono">{`${site.firstName} ${site.lastName}`.toUpperCase()}</a>
     <ul>
       {
         links.map((l) => (
           <li>
             <a
-              href={l.href}
+              href={withBase(l.href)}
               class:list={["mono", "nav-link", { active: isActive(l.href) }]}
               aria-current={isActive(l.href) ? "page" : undefined}
             >
