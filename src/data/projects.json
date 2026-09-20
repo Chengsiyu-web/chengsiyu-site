@@ -12,5 +12,12 @@
     "href": "/meiriyiduan/index.html",
     "year": "2026",
     "image": "/images/projects/daily-real.png"
+  },
+  {
+    "name": "日程协调器",
+    "description": "多人协调时间的日程工具：发起人圈出候选时间，大家勾选自己方便的时段，热力图直接看出所有人都能到场的时间，实时同步，打开链接即可用。",
+    "href": "https://chengsiyu-web.github.io/schedule-coordinator/",
+    "year": "2026",
+    "image": "/images/projects/schedule-coordinator.png"
   }
 ]
