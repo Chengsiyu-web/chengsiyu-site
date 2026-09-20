@@ -20,7 +20,10 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
       </p>
       <ul class="contact">
         {site.socials.map((s) => (
-          <li><a href={s.href} class="mono u-underline">{s.label}</a></li>
+          <li>
+            <span class="mono contact-label">{s.label}</span>
+            <a href={s.href} class="u-underline">{s.display}</a>
+          </li>
         ))}
       </ul>
     </div>
@@ -40,7 +43,9 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
   .kicker { color: var(--pink); }
   .bio { margin-top: 48px; border-top: 1px solid var(--hairline); padding-top: 32px; }
   .bio p { margin-bottom: 1.2em; max-width: 65ch; }
-  .contact { list-style: none; display: flex; gap: 28px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .contact { list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .contact li { display: flex; align-items: baseline; gap: 10px; }
+  .contact-label { color: var(--gray-mid); font-size: 0.7rem; letter-spacing: 0.1em; }
   .contact a { color: var(--gray-mid); }
   .contact a:hover { color: var(--ink); }
   @media (max-width: 768px) {

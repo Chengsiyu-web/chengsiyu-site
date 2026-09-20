@@ -1,10 +1,10 @@
 [
   {
-    "name": "分镜原型",
-    "description": "占位描述：一个把想法快速变成可点原型的小工具，外链直达在线版本。",
-    "href": "https://example.com",
+    "name": "Resume Tailor",
+    "description": "从 JD 出发定制简历：先把 JD 拆透——这个岗位实际在做什么、筛简历的人在看什么；再给出值不值得投的判断和分级修改方案，差距小就调措辞，差距大就换主线。你的经历和素材沉淀在浏览器本地，每次定制都能复用。",
+    "href": "https://github.com/Chengsiyu-web/resume-tailor",
     "year": "2026",
-    "image": "/images/projects/storyboard.svg"
+    "image": "/images/projects/resume-tailor.png"
   },
   {
     "name": "每日一断",
@@ -12,12 +12,5 @@
     "href": "/meiriyiduan/index.html",
     "year": "2026",
     "image": "/images/projects/daily-real.png"
-  },
-  {
-    "name": "占位项目三",
-    "description": "占位描述：第三个项目卡，验证两列网格与图片排布。",
-    "href": "https://example.com",
-    "year": "2025",
-    "image": "/images/projects/placeholder-3.svg"
   }
 ]

@@ -5,22 +5,28 @@
 // ─────────────────────────────────────────────
 
 export const site = {
-  // 你的名字（首页大标题会拆成两行，第二行显示为粉色）
-  // 保持 [firstName, lastName] 两个词的写法
+  // 首页大标题（一行写完，pinkWord 部分显示为粉色）
+  greetingLead: "Hi",
+  pinkWord: "there,",
+
+  // 你的名字（Hero 介绍行和页面标题用）
   firstName: "Siyu",
   lastName: "Cheng",
 
-  // 一句话签名（首页封面上名字下面那行）
-  tagline: "今天又在想什么",
+  // 一句话身份（Hero 介绍行，名字后面）
+  tagline: "欢迎进入我的小世界。努力成为生活体验家和世界探索者，会把一些文字和正在做的新东西放在这里。",
+
+  // 正在做什么（Hero 的 NOW 行，粉色 NOW 标签 + 一句话）
+  now: "用 AI 探索不同产品的无限可能",
 
   // 网站描述（给搜索引擎看的）
   description: "Siyucheng的个人站",
 
-  // 社交链接（label 显示为大写缩写，href 填地址）
-  // 不想要的整行删掉即可；邮箱的 href 写成 "mailto:你的邮箱"
+  // 社交链接（label 是前缀小字，display 是外显的地址文字，href 是实际跳转链接）
+  // 不想要的整行删掉即可
   socials: [
-    { label: "GITHUB", href: "https://github.com/yourname" },
-    { label: "EMAIL", href: "15701601901@163.com" },
+    { label: "GITHUB", display: "github.com/Chengsiyu-web", href: "https://github.com/Chengsiyu-web" },
+    { label: "EMAIL", display: "15701601901@163.com", href: "mailto:15701601901@163.com" },
   ],
 
   // 页脚那行小字

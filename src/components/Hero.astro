@@ -7,15 +7,20 @@ const socials = site.socials;
   <div class="cover-inner">
     <div class="issue mono reveal">{site.issue}</div>
     <h1 class="reveal">
-      {site.firstName}<br />
-      <span class="pink-word">{site.lastName}</span>
+      {site.greetingLead} <span class="pink-word">{site.pinkWord}</span>
     </h1>
-    <p class="tagline reveal">{site.tagline}</p>
+    <p class="intro reveal">
+      我是<strong>{site.lastName}{site.firstName}</strong>，{site.tagline}
+    </p>
+    <p class="now reveal">
+      <span class="now-label mono">NOW</span>{site.now}
+    </p>
     <ul class="socials reveal">
       {
         socials.map((s) => (
           <li>
-            <a href={s.href} class="mono u-underline">{s.label}</a>
+            <span class="mono social-label">{s.label}</span>
+            <a href={s.href} class="social-link u-underline">{s.display}</a>
           </li>
         ))
       }
@@ -53,23 +58,43 @@ const socials = site.socials;
     letter-spacing: -0.01em;
   }
   .pink-word { color: var(--pink); }
-  .tagline {
+  .intro {
     margin-top: 40px;
-    font-size: clamp(1rem, 1.6vw, 1.25rem);
+    font-size: 1.05rem;
     color: var(--gray-body-dark);
     max-width: 34em;
+  }
+  .intro strong { color: var(--paper); font-weight: 600; }
+  .now {
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--gray-dim-dark);
+    max-width: 34em;
+  }
+  .now-label {
+    color: var(--pink);
+    margin-right: 10px;
+    letter-spacing: 0.1em;
+    font-size: 0.7rem;
   }
   .socials {
     list-style: none;
     display: flex;
-    gap: 28px;
+    flex-wrap: wrap;
+    gap: 16px 40px;
     margin-top: 48px;
     padding-top: 24px;
     border-top: 1px solid var(--hairline-dark);
     max-width: 34em;
   }
-  .socials a { color: var(--gray-dim-dark); transition: color 0.2s var(--ease-out); }
-  .socials a:hover { color: var(--pink); }
+  .socials li { display: flex; align-items: baseline; gap: 12px; }
+  .social-label {
+    color: var(--gray-dim-dark);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+  .social-link { color: var(--paper); transition: color 0.2s var(--ease-out); }
+  .social-link:hover { color: var(--pink); }
   .scroll-cue {
     position: absolute;
     bottom: 32px;
