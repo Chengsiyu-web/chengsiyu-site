@@ -1,7 +1,10 @@
 ---
-// 随思随记（源：老 Portfolio My Thinking，字号/字体/动效按原站规格移植：
-// 纵向 hairline 列表、中文正文标签 + pink 下划线 hover、0.82rem 正文、sr 式浮现）
-// 新条目往 MUSINGS 数组里加即可。
+// My Thinking（1:1 复刻老 Portfolio 布局比例——参数取自其源码）：
+// work-views: max-width 960 / margin auto / padding 0 3rem 2.5rem
+// heading: label(0.62rem 大写) + flex:1 横线 + title(clamp 1.8-2.6rem serif 400)
+// item: padding 1.6rem 0 + hairline 顶线 / tag 0.92rem 500 / body 0.82rem 1.75
+// 容器在屏内垂直居中（justify-content: center）
+// 新条目往 MUSINGS 数组里加。
 const MUSINGS = [
   {
     cap: "关于 AI PM 的核心能力",
@@ -18,46 +21,66 @@ const MUSINGS = [
 ];
 ---
 
-<section class="musings section">
-  <header class="section-head reveal">
-    <div class="work-label">What I believe about building with AI.</div>
-    <h2>My Thinking</h2>
-  </header>
-  <div class="work-views">
-    {
-      MUSINGS.map((m) => (
-        <div class="work-view-item reveal">
-          <div class="work-view-tag">
-            <span>{m.cap}</span>
-          </div>
-          <div class="work-view-body-wrap">
-            <div class="work-view-body">{m.text}</div>
-          </div>
-        </div>
-      ))
-    }
+<div class="work-views">
+  <div class="wv-heading">
+    <div class="wv-heading-label">What I believe about building with AI.</div>
+    <div class="wv-heading-line"></div>
+    <div class="work-title">My Thinking</div>
   </div>
-</section>
+  {
+    MUSINGS.map((m) => (
+      <div class="work-view-item">
+        <div class="work-view-tag">
+          <span>{m.cap}</span>
+        </div>
+        <div class="work-view-body-wrap">
+          <div class="work-view-body">{m.text}</div>
+        </div>
+      </div>
+    ))
+  }
+</div>
 
 <style>
-  .section-head { margin-bottom: 8px; max-width: 960px; margin-inline: auto; width: 100%; padding: 0 1rem; }
-  .work-label {
-    font-size: 0.78rem;
-    color: var(--gray-mid);
-    letter-spacing: 0.04em;
-    margin-bottom: 4px;
-  }
-  .section-head h2 { font-size: 2rem; }
-
   .work-views {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 3rem 2.5rem;
     display: flex;
     flex-direction: column;
     gap: 0;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 0 1rem 1.5rem;
-    width: 100%;
   }
+
+  /* 标题区：左侧小标 + flex 横线 + 右侧衬线标题（源：work-views-heading） */
+  .wv-heading {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 1.4rem 0 0.6rem;
+    margin-bottom: 1.5rem;
+  }
+  .wv-heading-label {
+    font-size: 0.62rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-light);
+    white-space: nowrap;
+  }
+  .wv-heading-line {
+    flex: 1;
+    height: 1px;
+    background: var(--hairline);
+  }
+  .work-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    font-weight: 400;
+    color: var(--ink);
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
   .work-view-item {
     padding: 1.6rem 0;
     border-top: 1px solid var(--hairline);
@@ -73,7 +96,7 @@ const MUSINGS = [
     font-weight: 500;
     color: var(--ink);
   }
-  /* Underline Reveal 动效（源站 1:1：pink、1.5px、左起 scaleX，0.38s） */
+  /* Underline Reveal 动效（1:1：pink 1.5px 左起 scaleX 0.38s） */
   .work-view-tag span {
     display: inline-block;
     position: relative;
@@ -86,7 +109,7 @@ const MUSINGS = [
     bottom: -2px;
     width: 100%;
     height: 1.5px;
-    background: var(--pink);
+    background: var(--pink-deep);
     transform: scaleX(0);
     transform-origin: left center;
     transition: transform 0.38s var(--ease-out);
@@ -95,12 +118,13 @@ const MUSINGS = [
     .work-view-item:hover .work-view-tag span::after { transform: scaleX(1); }
   }
   .work-view-body {
-    font-size: 0.92rem;
+    font-size: 0.82rem;
     color: var(--gray-mid);
     line-height: 1.75;
-    max-width: 72ch;
   }
+
   @media (max-width: 768px) {
-    .section-head h2 { font-size: 1.6rem; }
+    .work-views { padding: 0 1.2rem 1.5rem; }
+    .wv-heading { flex-wrap: wrap; gap: 0.8rem; }
   }
 </style>
