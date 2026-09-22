@@ -6,16 +6,11 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <Base title={`简历 — ${NAME}`}>
-  <main class="page-main">
-    <header class="page-head stagger">
-      <p class="mono kicker">RESUME</p>
-      <h1>简历</h1>
-    </header>
-
-    <div class="cv-split">
-      <aside class="cv-photo" aria-label="个人照片">
-        <img src={`${base}/images/profile.JPG`} alt="程思语" />
-      </aside>
+  <main class="cv-screen">
+    <aside class="cv-photo" aria-label="个人照片">
+      <img src={`${base}/images/profile.JPG`} alt="程思语" />
+    </aside>
+    <div class="cv-resume">
       <div class="cv-paper">
       <div class="resume-top stagger" data-d="1">
         <div class="resume-name-block">
@@ -131,48 +126,43 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
           ))}
         </ul>
       </div>
-    </div>
-    </div><!-- /cv-split -->
+    </div><!-- /cv-paper -->
+    </div><!-- /cv-resume -->
   </main>
 </Base>
 
 <style>
-  .page-main {
-    max-width: 46rem;
-    margin: 0 auto;
-    padding: 96px 24px 0;
-  }
-  .page-head h1 {
-    font-size: clamp(2.8rem, 6vw, 4.5rem);
-    margin: 12px 0 0;
-  }
-  .kicker { color: var(--pink); }
-
-  .cv-split {
-    margin-top: 48px;
+  /* 老站 About 布局复刻：26% 全高照片 + 右栏独立滚动 */
+  .cv-screen {
     display: grid;
     grid-template-columns: 26% 1fr;
-    gap: 0;
-    align-items: start;
-    border-top: 1px solid var(--hairline);
+    height: calc(100dvh - 60px);
+    overflow: hidden;
   }
   .cv-photo {
-    position: sticky;
-    top: 84px;
-    padding-right: 28px;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    border-right: 1px solid var(--hairline);
+    position: relative;
     background: var(--bg-warm);
+    border-right: 1px solid var(--hairline);
+    overflow: hidden;
   }
   .cv-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center top;
     display: block;
   }
+  .cv-resume {
+    overflow-y: auto;
+    height: 100%;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  .cv-resume::-webkit-scrollbar { width: 4px; }
+  .cv-resume::-webkit-scrollbar-thumb { background: var(--hairline); border-radius: 2px; }
   .cv-paper {
-    padding: 32px 0 0 36px;
+    padding: 2.2rem 3rem;
+    max-width: 46rem;
   }
 
   .resume-top {
@@ -281,17 +271,10 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   .cv-contact-list a:hover { color: var(--ink); }
 
   @media (max-width: 768px) {
-    .page-main { padding: 56px 20px 0; }
-    .cv-split { grid-template-columns: 1fr; }
-    .cv-photo {
-      position: static;
-      aspect-ratio: auto;
-      height: 300px;
-      padding-right: 0;
-      border-right: none;
-      border-bottom: 1px solid var(--hairline);
-    }
-    .cv-paper { padding: 24px 0 0; }
+    .cv-screen { grid-template-columns: 1fr; grid-template-rows: auto 1fr; height: auto; min-height: 100dvh; overflow: visible; }
+    .cv-photo { height: 340px; border-right: none; border-bottom: 1px solid var(--hairline); }
+    .cv-resume { overflow: visible; height: auto; }
+    .cv-paper { padding: 1.6rem 1.4rem; }
     .cv-skills-row { gap: 1.2rem; }
   }
 </style>
