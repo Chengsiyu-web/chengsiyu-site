@@ -57,9 +57,18 @@ const { title, description = site.description } = Astro.props;
         document.querySelectorAll(".reveal:not(.is-visible), .stagger:not(.is-visible)").forEach((el) => el.classList.add("is-visible"));
       }, 3000);
 
-      // 首页：封面在视口内时导航用深色，滚出封面恢复浅色
+      // 首页：hero 屏激活时导航用深色，其余屏恢复浅色（分屏模式下文档不滚，以激活面板为准）
       const nav = document.querySelector(".nav");
-      if (nav && document.querySelector(".cover")) {
+      if (nav && document.querySelector(".screens")) {
+        const heroPanel = document.querySelector('[data-panel="hero"]');
+        if (heroPanel) {
+          const sync = () => {
+            nav.classList.toggle("on-dark", heroPanel.classList.contains("screen-active"));
+          };
+          sync();
+          new MutationObserver(sync).observe(heroPanel, { attributes: true, attributeFilter: ["class"] });
+        }
+      } else if (nav && document.querySelector(".cover")) {
         const sync = () => {
           nav.classList.toggle("on-dark", window.scrollY < window.innerHeight - 60);
         };

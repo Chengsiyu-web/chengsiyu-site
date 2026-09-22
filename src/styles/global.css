@@ -54,11 +54,8 @@ button, a { font-family: inherit; }
 .stagger { opacity: 0; transform: translateY(20px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
 .stagger.is-visible { opacity: 1; transform: none; }
 
-/* 分屏切换（源：老 Portfolio screen 机制，首页三个模块用） */
+/* 分屏切换（源：老 Portfolio screen 机制：面板叠放 + 内部滚动，文档不滚） */
 .screen-panel {
-  min-height: calc(100dvh - 60px);
-  display: flex;
-  align-items: center;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -96,3 +93,6 @@ button, a { font-family: inherit; }
   .u-underline::after { transition: none; }
   * { scroll-behavior: auto; }
 }
+
+/* 首页分屏模式：footer 藏进最后一屏底部，避免撑出文档滚动余量 */
+.screens ~ .site-footer { display: none; }

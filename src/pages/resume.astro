@@ -2,6 +2,7 @@
 import Base from "../layouts/Base.astro";
 import { site } from "../config";
 const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <Base title={`简历 — ${NAME}`}>
@@ -11,7 +12,11 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
       <h1>简历</h1>
     </header>
 
-    <div class="cv-paper">
+    <div class="cv-split">
+      <aside class="cv-photo" aria-label="个人照片">
+        <img src={`${base}/images/profile.JPG`} alt="程思语" />
+      </aside>
+      <div class="cv-paper">
       <div class="resume-top stagger" data-d="1">
         <div class="resume-name-block">
           <div class="resume-name-zh">程思语</div>
@@ -127,6 +132,7 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
         </ul>
       </div>
     </div>
+    </div><!-- /cv-split -->
   </main>
 </Base>
 
@@ -142,10 +148,31 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
   }
   .kicker { color: var(--pink); }
 
-  .cv-paper {
+  .cv-split {
     margin-top: 48px;
+    display: grid;
+    grid-template-columns: 26% 1fr;
+    gap: 0;
+    align-items: start;
     border-top: 1px solid var(--hairline);
-    padding-top: 32px;
+  }
+  .cv-photo {
+    position: sticky;
+    top: 84px;
+    padding-right: 28px;
+    aspect-ratio: 3 / 4;
+    overflow: hidden;
+    border-right: 1px solid var(--hairline);
+    background: var(--bg-warm);
+  }
+  .cv-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .cv-paper {
+    padding: 32px 0 0 36px;
   }
 
   .resume-top {
@@ -255,6 +282,16 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
 
   @media (max-width: 768px) {
     .page-main { padding: 56px 20px 0; }
+    .cv-split { grid-template-columns: 1fr; }
+    .cv-photo {
+      position: static;
+      aspect-ratio: auto;
+      height: 300px;
+      padding-right: 0;
+      border-right: none;
+      border-bottom: 1px solid var(--hairline);
+    }
+    .cv-paper { padding: 24px 0 0; }
     .cv-skills-row { gap: 1.2rem; }
   }
 </style>
