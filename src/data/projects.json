@@ -7,11 +7,11 @@
     "image": "/images/projects/resume-tailor.png"
   },
   {
-    "name": "每日一断",
-    "description": "基于小六壬的每日决策小工具，遇事不决来断一下。",
-    "href": "/meiriyiduan/index.html",
+    "name": "AI 小说生成工作台",
+    "description": "短篇小说工业化生产工具：从 0 到 1 完成前端交互设计、数据建模、API 服务端对接的全链路闭环，Agent 中枢编排 3 个 Skill，实现从热榜扫榜到灵感卡片的分步数据流转。",
+    "href": "https://chengsiyu-web.github.io/hotlist-direction-showcase/",
     "year": "2026",
-    "image": "/images/projects/daily-real.png"
+    "image": "/images/projects/hotlist-demo.png"
   },
   {
     "name": "日程协调器",
@@ -19,5 +19,12 @@
     "href": "https://chengsiyu-web.github.io/schedule-coordinator/",
     "year": "2026",
     "image": "/images/projects/schedule-coordinator.png"
+  },
+  {
+    "name": "每日一断",
+    "description": "基于小六壬的每日决策小工具，遇事不决来断一下。",
+    "href": "/meiriyiduan/",
+    "year": "2026",
+    "image": "/images/projects/daily-real.png"
   }
 ]

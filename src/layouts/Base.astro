@@ -46,9 +46,15 @@ const { title, description = site.description } = Astro.props;
         el.style.transitionDelay = `${(i % 6) * 60}ms`;
         io.observe(el);
       });
+      // stagger 错峰入场：data-d 指定序号（1/2/3 → 80/160/240ms），同一屏内依次浮现
+      document.querySelectorAll(".stagger").forEach((el) => {
+        const d = Number(el.dataset.d || 0);
+        if (d) el.style.transitionDelay = `${d * 80}ms`;
+        io.observe(el);
+      });
       // 兜底：3s 后任何未触发的 reveal 直接显示，防止长页面被永久隐藏
       setTimeout(() => {
-        document.querySelectorAll(".reveal:not(.is-visible)").forEach((el) => el.classList.add("is-visible"));
+        document.querySelectorAll(".reveal:not(.is-visible), .stagger:not(.is-visible)").forEach((el) => el.classList.add("is-visible"));
       }, 3000);
 
       // 首页：封面在视口内时导航用深色，滚出封面恢复浅色

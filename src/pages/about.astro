@@ -1,5 +1,6 @@
 ---
 import Base from "../layouts/Base.astro";
+import FootprintMap from "../components/FootprintMap.astro";
 import { site } from "../config";
 const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
 ---
@@ -10,15 +11,60 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
       <p class="mono kicker">ABOUT</p>
       <h1>关于</h1>
     </header>
-    <div class="bio reveal">
-      <p>
-        占位简介第一段：你是谁、在做什么、这个站用来放什么。两三句话说清，
-        杂志感的排版会替你把气质撑起来。
-      </p>
-      <p>
-        占位简介第二段：可以聊聊你正在做的事，或者你希望别人通过这个页面记住你的哪一面。
-      </p>
-      <ul class="contact">
+
+    <div class="about-body">
+      <section class="cv-entry reveal">
+        <span class="mono entry-label">RESUME</span>
+        <div class="entry-text">
+          <h2>简历</h2>
+          <p>教育与实习经历的完整版本，含联系方式。</p>
+        </div>
+        <a href="/resume/" class="u-underline entry-link">查看完整简历 ↗</a>
+      </section>
+
+      <section class="tmi reveal">
+        <p class="mono tmi-label">TOO MUCH INFORMATION</p>
+        <h2 class="tmi-title">简历以外的我</h2>
+
+        <details class="acc" open>
+          <summary>
+            <span class="acc-quote">命运所有的雨季，都是为了回到最初的洋流。</span>
+            <span class="acc-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="acc-body">
+            <p>在意大利的一年，也许算我驶出既定轨道的一段日子。人生的雨季里，既有在异国他乡遇到过的困难和煎熬，也有独自走过十几个城市所见过的风景。我想我不会忘记某个连日阴雨后看到最澄澈的南法的海，不会忘记在意大利下课后去兼职当舞蹈老师的日子，也不会忘记和来自五湖四海的同学用英文争论各自国家视角下的国际局势。</p>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>
+            <span class="acc-quote">要一起跳舞吗？</span>
+            <span class="acc-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="acc-body">
+            <p>平平无奇的跳舞人和校园舞蹈博主，从 Kpop 跳到 Urban/Hiphop，在跳舞还需要持续进步，欢迎来找我跳舞。</p>
+          </div>
+        </details>
+
+        <details class="acc">
+          <summary>
+            <span class="acc-quote">在什么都要"垂直"的时代，我想要做一棵树。</span>
+            <span class="acc-icon" aria-hidden="true"></span>
+          </summary>
+          <div class="acc-body">
+            <p>在学校，作为商科学生，我学习企业战略、管理学、会计学，在宏观视角和具体科目之间寻找理解商业的方式。</p>
+            <p>交换那一年，我从国际政治、欧盟经济法的角度重塑了自己的国际认知——这不是我的专业方向，但我想驱动自己去了解更广阔的世界，和构成现状的复杂历史背景。</p>
+            <p>开始进入互联网公司实习之后，AI 在我面前打开了一个潘多拉魔盒。我在 FOMO 中坚持前行，努力完善自己的技术视角，从一个完全的计算机小白，到能够自己 vibe coding 项目。我始终保持对新事物的好奇心，希望能让 AI 帮助我提升效率，希望能用 AI 做一些有趣的、有用的事情。</p>
+            <p>我也曾困扰于"垂直"在这个时代的重要性，但我不想把自己打造成深深契合某个岗位的螺丝钉，而是一个可以随时生长的树。</p>
+          </div>
+        </details>
+      </section>
+
+      <section class="footprint-sec reveal">
+        <FootprintMap />
+      </section>
+
+      <ul class="contact reveal">
         {site.socials.map((s) => (
           <li>
             <span class="mono contact-label">{s.label}</span>
@@ -41,14 +87,95 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
     margin: 12px 0 0;
   }
   .kicker { color: var(--pink); }
-  .bio { margin-top: 48px; border-top: 1px solid var(--hairline); padding-top: 32px; }
-  .bio p { margin-bottom: 1.2em; max-width: 65ch; }
-  .contact { list-style: none; display: flex; flex-wrap: wrap; gap: 12px 32px; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--hairline); }
+  .about-body { margin-top: 48px; display: flex; flex-direction: column; gap: 56px; }
+
+  /* 简历入口 */
+  .cv-entry {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    align-items: center;
+    gap: 20px;
+    border-top: 1px solid var(--hairline);
+    border-bottom: 1px solid var(--hairline);
+    padding: 28px 0;
+  }
+  .entry-label { color: var(--pink); }
+  .entry-text h2 { font-size: 1.35rem; }
+  .entry-text p { margin-top: 4px; color: var(--gray-mid); font-size: 13.5px; }
+  .entry-link { font-family: var(--font-display); font-size: 0.95rem; white-space: nowrap; }
+
+  /* TMI 手风琴 */
+  .tmi-label { color: var(--gray-mid); }
+  .tmi-title { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 8px 0 20px; }
+
+  .acc {
+    border-top: 1px solid var(--hairline);
+  }
+  .acc:last-of-type { border-bottom: 1px solid var(--hairline); }
+  .acc summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.35rem 0.2rem;
+    cursor: pointer;
+  }
+  .acc summary::-webkit-details-marker { display: none; }
+  .acc summary:hover .acc-quote { color: var(--ink); }
+  .acc-quote {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    color: var(--gray-mid);
+    line-height: 1.6;
+    transition: color 0.24s var(--ease-out);
+  }
+  .acc[open] .acc-quote { color: var(--ink); }
+  .acc-icon {
+    flex: none;
+    width: 11px;
+    height: 11px;
+    position: relative;
+  }
+  .acc-icon::before, .acc-icon::after {
+    content: "";
+    position: absolute;
+    background: var(--gray-mid);
+    transition: transform 0.32s var(--ease-out);
+  }
+  .acc-icon::before { left: 0; top: 5px; width: 11px; height: 1.5px; }
+  .acc-icon::after { left: 4.75px; top: 0; width: 1.5px; height: 11px; }
+  .acc[open] .acc-icon::after { transform: scaleY(0); }
+  .acc-body {
+    padding: 0 0.2rem 1.6rem;
+    max-width: 62ch;
+  }
+  .acc-body p {
+    font-size: 14.5px;
+    color: var(--gray-mid);
+    line-height: 1.85;
+    margin-bottom: 0.9em;
+  }
+
+  .footprint-sec { border-top: 1px solid var(--hairline); padding-top: 32px; }
+
+  /* 社交 */
+  .contact {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    border-top: 1px solid var(--hairline);
+    padding-top: 24px;
+  }
   .contact li { display: flex; align-items: baseline; gap: 10px; }
   .contact-label { color: var(--gray-mid); font-size: 0.7rem; letter-spacing: 0.1em; }
   .contact a { color: var(--gray-mid); }
   .contact a:hover { color: var(--ink); }
+
   @media (max-width: 768px) {
     .page-main { padding: 56px 20px 0; }
+    .cv-entry { grid-template-columns: 1fr; gap: 10px; }
+    .about-body { gap: 40px; }
   }
 </style>

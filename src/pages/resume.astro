@@ -1,0 +1,260 @@
+---
+import Base from "../layouts/Base.astro";
+import { site } from "../config";
+const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
+---
+
+<Base title={`简历 — ${NAME}`}>
+  <main class="page-main">
+    <header class="page-head stagger">
+      <p class="mono kicker">RESUME</p>
+      <h1>简历</h1>
+    </header>
+
+    <div class="cv-paper">
+      <div class="resume-top stagger" data-d="1">
+        <div class="resume-name-block">
+          <div class="resume-name-zh">程思语</div>
+          <div class="resume-name-en">Cheng Siyu &nbsp;Chloe</div>
+        </div>
+        <div class="resume-info-block">
+          <div class="resume-info-line">中国人民大学商学院 · 工商管理 / 会计学 · 2027 届</div>
+          <div class="resume-info-line">15701601901 · 15701601901@163.com</div>
+        </div>
+      </div>
+
+      <div class="resume-slogan stagger" data-d="2">
+        希望成为一个"丰富"的人。有温度、有思考、有能力。
+      </div>
+
+      <div class="resume-body">
+        <section class="cv-section stagger" data-d="1">
+          <div class="cv-label">教育经历</div>
+          <div class="cv-item">
+            <div class="cv-item-head">
+              <div class="cv-item-title">中国人民大学商学院</div>
+              <div class="cv-item-date">2023–2027</div>
+            </div>
+            <div class="cv-item-sub">本科 · 工商管理 / 会计学</div>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-head">
+              <div class="cv-item-title">Luiss Guido Carli · 意大利罗马</div>
+              <div class="cv-item-date">2024–2025</div>
+            </div>
+            <div class="cv-item-sub">Business Administration · 交换生</div>
+          </div>
+        </section>
+
+        <section class="cv-section stagger" data-d="2">
+          <div class="cv-label">实习经历</div>
+          <div class="cv-item">
+            <div class="cv-item-head">
+              <div class="cv-item-title">美团</div>
+              <div class="cv-item-date">2026.05–至今</div>
+            </div>
+            <div class="cv-item-sub">在线娱乐部 · AI 产品经理</div>
+            <ul class="cv-item-bullets">
+              <li><strong>产品架构与端到端交付：</strong>独立搭建短篇小说工业化生产工具，从 0 到 1 完成前端交互设计、数据建模、API 服务端对接的全链路闭环，搭建 Agent 中枢并编排 3 个 Skill，实现从热榜扫榜到灵感卡片的分步数据流转。</li>
+              <li><strong>AI 工程化能力：</strong>主导设计分镜表 Prompt 底层逻辑，构建双层架构与自动关联资产机制；通过多步骤调用解决分镜生成输出不稳定，实现工业级分镜表输出。</li>
+              <li><strong>交互设计与用户心智洞察：</strong>主导重构分镜编辑页面，独立完成交互原型与流程 Demo 开发，效果优于内部竞品。</li>
+              <li><strong>AI 全栈交付型 PM：</strong>作为 AI 全栈交付型 PM 进行 AI 方向探索，独立完成从 Agent 接入、知识库挂载到 Skill 工作流编排的全链路交付。</li>
+            </ul>
+          </div>
+          <div class="cv-item">
+            <div class="cv-item-head">
+              <div class="cv-item-title">小红书</div>
+              <div class="cv-item-date">2026.01–04</div>
+            </div>
+            <div class="cv-item-sub">风险感知与策略运营中心 · 风控策略运营实习生</div>
+            <ul class="cv-item-bullets">
+              <li><strong>风险洞察与归因：</strong>基于外部风险反馈和已知风险信息汇总，聚焦风险数据监测进行聚类与归因分析，构建结构化风险特征库。</li>
+              <li><strong>策略部署方向构建：</strong>构建核心体验指标体系，定义「事件量×VVR浓度×diff值」的优先级判断框架，驱动团队进行资源聚焦。</li>
+              <li><strong>风险感知闭环与防控能力建设：</strong>针对特定风险域机审高误伤率发起策略优化，将该场景误伤率从 33.8% 降至 25.5%，并在复盘中对「管控效率与创作者体验」的权衡进行产品化论证。</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="cv-section stagger" data-d="3">
+          <div class="cv-label">技能 &amp; 优势</div>
+          <div class="cv-skills-row">
+            <div class="cv-skill-group">
+              <div class="cv-skill-group-label">AI 产品核心</div>
+              <div class="skill-tags">
+                <span class="skill-tag">Agent 架构与 Skill 编排</span>
+                <span class="skill-tag">Prompt 工程与评测体系</span>
+                <span class="skill-tag">大模型应用与多模态</span>
+              </div>
+            </div>
+            <div class="cv-skill-group">
+              <div class="cv-skill-group-label">产品与用户</div>
+              <div class="skill-tags">
+                <span class="skill-tag">产品规划与需求定义</span>
+                <span class="skill-tag">用户调研与交互设计</span>
+                <span class="skill-tag">竞品分析</span>
+              </div>
+            </div>
+            <div class="cv-skill-group">
+              <div class="cv-skill-group-label">数据与落地</div>
+              <div class="skill-tags">
+                <span class="skill-tag">数据驱动决策</span>
+                <span class="skill-tag">端到端交付与快速验证</span>
+                <span class="skill-tag">Harness / AI 工具应用</span>
+              </div>
+            </div>
+            <div class="cv-skill-group">
+              <div class="cv-skill-group-label">荣誉</div>
+              <div class="skill-tags">
+                <span class="skill-tag">「京东杯」决赛一等奖</span>
+                <span class="skill-tag">「京彩大创」三等奖</span>
+                <span class="skill-tag">FreeDancer 社长</span>
+                <span class="skill-tag">中意美三学位本科班 班长</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div class="cv-contact stagger" data-d="3">
+        <span class="mono cv-contact-label">FIND ME</span>
+        <ul class="cv-contact-list">
+          {site.socials.map((s) => (
+            <li>
+              <span class="mono">{s.label}</span>
+              <a href={s.href} class="u-underline" target="_blank" rel="noopener noreferrer">{s.display}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<style>
+  .page-main {
+    max-width: 46rem;
+    margin: 0 auto;
+    padding: 96px 24px 0;
+  }
+  .page-head h1 {
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    margin: 12px 0 0;
+  }
+  .kicker { color: var(--pink); }
+
+  .cv-paper {
+    margin-top: 48px;
+    border-top: 1px solid var(--hairline);
+    padding-top: 32px;
+  }
+
+  .resume-top {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding-bottom: 1.4rem;
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: 1.4rem;
+  }
+  .resume-name-block { display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap; }
+  .resume-name-zh {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+  .resume-name-en {
+    font-size: 0.82rem;
+    color: var(--gray-mid);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding-left: 0.9rem;
+    border-left: 1px solid var(--pink);
+  }
+  .resume-info-block { display: flex; flex-direction: column; gap: 0.25rem; }
+  .resume-info-line { font-size: 0.84rem; color: var(--gray-mid); line-height: 1.6; }
+
+  .resume-slogan {
+    font-family: var(--font-display);
+    font-size: clamp(0.95rem, 1.4vw, 1.1rem);
+    color: var(--gray-mid);
+    line-height: 1.65;
+    border-left: 2px solid var(--pink);
+    padding-left: 1rem;
+    margin-bottom: 1.6rem;
+  }
+
+  .resume-body { display: flex; flex-direction: column; gap: 1.8rem; }
+
+  .cv-label {
+    font-size: 0.66rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    font-weight: 600;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--hairline);
+    margin-bottom: 1rem;
+  }
+  .cv-item { margin-bottom: 1rem; }
+  .cv-item:last-child { margin-bottom: 0; }
+  .cv-item-head { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 0.15rem; gap: 0.5rem; }
+  .cv-item-title { font-size: 0.9rem; font-weight: 600; line-height: 1.4; }
+  .cv-item-date { font-size: 0.75rem; color: var(--gray-mid); white-space: nowrap; flex-shrink: 0; font-variant-numeric: tabular-nums; }
+  .cv-item-sub { font-size: 0.84rem; color: var(--gray-mid); line-height: 1.6; }
+
+  .cv-item-bullets {
+    font-size: 0.84rem;
+    color: var(--gray-mid);
+    line-height: 1.75;
+    margin-top: 0.4rem;
+    padding-left: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+  }
+  .cv-item-bullets li { list-style: disc; }
+  .cv-item-bullets strong { color: var(--ink); font-weight: 600; }
+
+  .cv-skills-row { display: flex; gap: 2rem; flex-wrap: wrap; }
+  .cv-skill-group { flex: 1; min-width: 200px; }
+  .cv-skill-group-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--gray-mid);
+    margin-bottom: 0.5rem;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .skill-tag {
+    font-size: 0.74rem;
+    padding: 0.2rem 0.7rem;
+    border: 1px solid var(--hairline);
+    border-radius: 2rem;
+    color: var(--gray-mid);
+  }
+
+  .cv-contact {
+    margin-top: 2.4rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid var(--hairline);
+  }
+  .cv-contact-label { color: var(--gray-mid); }
+  .cv-contact-list {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 32px;
+    margin-top: 12px;
+  }
+  .cv-contact-list li { display: flex; align-items: baseline; gap: 10px; }
+  .cv-contact-list a { color: var(--gray-mid); }
+  .cv-contact-list a:hover { color: var(--ink); }
+
+  @media (max-width: 768px) {
+    .page-main { padding: 56px 20px 0; }
+    .cv-skills-row { gap: 1.2rem; }
+  }
+</style>

@@ -57,3 +57,11 @@
 ## 9. Motion 哲学
 
 丝滑但克制：封面入场标题 8px 上移 + 淡入（600ms，`cubic-bezier(0.23,1,0.32,1)`）；滚动到浅色区时内容 12px 上移显现（一次性，stagger 60ms）；hover 下划线 `transform: scaleX` 240ms；全部包 `prefers-reduced-motion` 兜底与 `@media (hover:hover)`。
+
+## 6. 迁移组件（2026-09-22，自老 Portfolio 合并）
+
+- **stagger 错峰入场**：`.stagger[data-d="1|2|3"]`（80/160/240ms delay），与 `.reveal` 共用 IntersectionObserver；替代老站 fade-up d1/d2/d3
+- **简历页 `/resume/`**：`cv-paper` 容器 + `.cv-section/.cv-label`（mono 大写 + hairline 底线）+ `.cv-item-bullets`（disc 列表，strong 用 ink）+ `.skill-tag`（hairline 边框胶囊，无底色）+ `.resume-slogan`（pink 左竖线引言）；不设导航 tab，入口在关于页 cv-entry 区块
+- **关于页手风琴**：`<details>.acc` 原生语义 + 自绘加减 icon（scaleY 消失动画）+ summary 引号文案用 `--font-display`
+- **足迹地图 FootprintMap**：简笔欧洲 SVG（hairline 描线）+ `.fp-poi-dot` pink 呼吸圆点（poiPulse 2.2s）+ hover 墨底标签；城市数据写死在组件 PLACES 数组，加城市改这一处
+- 「思考」「研究」类文章：正文直接短文成篇；研究类文内放完整版外链
