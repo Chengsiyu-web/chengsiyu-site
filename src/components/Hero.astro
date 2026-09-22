@@ -4,105 +4,112 @@ const socials = site.socials;
 ---
 
 <section class="cover">
+  <div class="blob blob-1" aria-hidden="true"></div>
+  <div class="blob blob-2" aria-hidden="true"></div>
   <div class="cover-inner">
-    <div class="issue mono reveal">{site.issue}</div>
-    <h1 class="reveal">
-      {site.greetingLead} <span class="pink-word">{site.pinkWord}</span>
-    </h1>
-    <p class="intro reveal">
-      我是<strong>{site.lastName}{site.firstName}</strong>，{site.tagline}
-    </p>
-    <p class="now reveal">
-      <span class="now-label mono">NOW</span>{site.now}
-    </p>
-    <ul class="socials reveal">
-      {
-        socials.map((s) => (
-          <li>
-            <span class="mono social-label">{s.label}</span>
-            <a href={s.href} class="social-link u-underline">{s.display}</a>
-          </li>
-        ))
-      }
-    </ul>
-    <a href="#latest" class="scroll-cue mono" aria-label="向下滚动查看最新文章">SCROLL ↓</a>
+    <div class="hero-avatar reveal">🌿</div>
+    <div class="hero-eyebrow mono reveal" data-d="1">Product · Design · Life</div>
+    <h1 class="hero-name reveal" data-d="2">Hi, I'm Chloe.</h1>
+    <p class="hero-tagline reveal" data-d="3"><em>I make things with curiosity and care.</em></p>
+    <div class="hero-meta reveal" data-d="3">
+      <span><i class="meta-dot"></i>Beijing · China</span>
+      <span><i class="meta-dot"></i>Class of 2027</span>
+      <span><i class="meta-dot"></i>Open to Opportunities</span>
+    </div>
+    <button class="hero-cta reveal" data-d="4" data-next-screen="1">
+      About Me &nbsp;↓
+    </button>
   </div>
 </section>
 
 <style>
   .cover {
-    background: var(--ink);
-    color: var(--paper);
+    background: var(--bg);
     min-height: 100dvh;
     display: flex;
     align-items: center;
     position: relative;
+    overflow: hidden;
   }
+  /* 柔和色块（源：老 Portfolio blob，米色系） */
+  .blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.5;
+    pointer-events: none;
+  }
+  .blob-1 { width: 480px; height: 480px; background: var(--pink-lt); top: -140px; right: -120px; }
+  .blob-2 { width: 380px; height: 380px; background: var(--bg-warm); bottom: -120px; left: -100px; }
+
   .cover-inner {
     max-width: 72rem;
     margin: 0 auto;
-    padding: 120px 40px;
+    padding: 100px 40px;
     width: 100%;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
-  .issue {
-    display: inline-block;
-    background: var(--pink);
-    color: var(--ink);
-    padding: 6px 14px;
-    margin-bottom: 40px;
-  }
-  h1 {
-    font-size: clamp(3.5rem, 10vw, 8.5rem);
-    font-weight: 800;
-    line-height: 0.95;
+  .hero-avatar { font-size: 2.4rem; margin-bottom: 20px; }
+  .hero-eyebrow { color: var(--gray-light); letter-spacing: 0.24em; margin-bottom: 22px; }
+  .hero-name {
+    font-size: clamp(3rem, 8vw, 5.2rem);
+    font-weight: 500;
+    line-height: 1.02;
     letter-spacing: -0.01em;
   }
-  .pink-word { color: var(--pink); }
-  .intro {
-    margin-top: 40px;
-    font-size: 1.05rem;
-    color: var(--gray-body-dark);
-    max-width: 34em;
+  .hero-tagline {
+    margin-top: 18px;
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    color: var(--gray-mid);
+    font-style: italic;
+    font-weight: 300;
   }
-  .intro strong { color: var(--paper); font-weight: 600; }
-  .now {
-    margin-top: 20px;
-    font-size: 0.9rem;
-    color: var(--gray-dim-dark);
-    max-width: 34em;
-  }
-  .now-label {
-    color: var(--pink);
-    margin-right: 10px;
-    letter-spacing: 0.1em;
-    font-size: 0.7rem;
-  }
-  .socials {
-    list-style: none;
+  .hero-meta {
+    margin-top: 34px;
     display: flex;
     flex-wrap: wrap;
-    gap: 16px 40px;
+    justify-content: center;
+    gap: 14px 28px;
+    font-size: 0.82rem;
+    color: var(--gray-light);
+    letter-spacing: 0.05em;
+  }
+  .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+  .meta-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: var(--pink-deep);
+    display: inline-block;
+  }
+  .hero-cta {
     margin-top: 48px;
-    padding-top: 24px;
-    border-top: 1px solid var(--hairline-dark);
-    max-width: 34em;
+    background: none;
+    border: 1px solid var(--hairline);
+    border-radius: 999px;
+    padding: 12px 34px;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    color: var(--gray-mid);
+    cursor: pointer;
+    transition: border-color 0.25s var(--ease-out), color 0.25s var(--ease-out), transform 0.25s var(--ease-out);
   }
-  .socials li { display: flex; align-items: baseline; gap: 12px; }
-  .social-label {
-    color: var(--gray-dim-dark);
-    font-size: 0.7rem;
-    letter-spacing: 0.1em;
+  @media (hover: hover) and (pointer: fine) {
+    .hero-cta:hover {
+      border-color: var(--pink-deep);
+      color: var(--pink-deep);
+      transform: translateY(2px);
+    }
   }
-  .social-link { color: var(--paper); transition: color 0.2s var(--ease-out); }
-  .social-link:hover { color: var(--pink); }
-  .scroll-cue {
-    position: absolute;
-    bottom: 32px;
-    left: 40px;
-    color: var(--gray-dim-dark);
-  }
+  .hero-cta:active { transform: translateY(2px); }
   @media (max-width: 768px) {
-    .cover-inner { padding: 96px 20px; }
-    .scroll-cue { left: 20px; }
+    .cover-inner { padding: 88px 20px; }
+    .blob-1 { width: 300px; height: 300px; }
+    .blob-2 { width: 240px; height: 240px; }
   }
 </style>

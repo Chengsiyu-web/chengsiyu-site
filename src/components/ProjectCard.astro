@@ -21,7 +21,7 @@ const hrefResolved = href.startsWith("/") ? base + href : href;
     ) : null
   }
   <div class="body">
-    <div class="mono meta">
+    <div class="meta mono">
       <span class="year">{year}</span>
       <span class="arrow" aria-hidden="true">↗</span>
     </div>
@@ -31,17 +31,28 @@ const hrefResolved = href.startsWith("/") ? base + href : href;
 </a>
 
 <style>
+  /* 视觉规格源：老 Portfolio .pcard（白底圆角卡、深粉 tag、serif 标题、hover 浮起） */
   .project-card {
     display: flex;
     flex-direction: column;
+    background: var(--bg-white);
     border: 1px solid var(--hairline);
+    border-radius: 10px;
+    overflow: hidden;
+    transition: box-shadow 0.24s var(--ease-out), transform 0.24s var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .project-card:hover {
+      box-shadow: 0 8px 28px rgba(44, 36, 32, 0.07);
+      transform: translateY(-3px);
+    }
   }
   .thumb {
     overflow: hidden;
     border-bottom: 1px solid var(--hairline);
     aspect-ratio: 16 / 9;
     max-height: 220px;
-    background: var(--paper);
+    background: var(--bg-warm);
   }
   .thumb img {
     width: 100%;
@@ -52,17 +63,20 @@ const hrefResolved = href.startsWith("/") ? base + href : href;
   @media (hover: hover) and (pointer: fine) {
     .project-card:hover .thumb img { transform: scale(1.03); }
   }
-  .body { padding: 24px 24px 28px; display: flex; flex-direction: column; min-width: 0; }
+  .body { padding: 20px 22px 22px; display: flex; flex-direction: column; min-width: 0; }
   .meta {
     display: flex;
     justify-content: space-between;
-    color: var(--gray-mid);
+    color: var(--gray-light);
     margin-bottom: 10px;
   }
-  .arrow { transition: transform 0.24s var(--ease-out); }
-  .name { font-size: 1.4rem; }
-  .project-card:hover .name { text-decoration: underline; text-decoration-color: var(--pink); text-decoration-thickness: 2px; text-underline-offset: 6px; }
-  .project-card:hover .arrow { transform: translate(4px, -4px); color: var(--pink); }
+  .arrow { transition: transform 0.24s var(--ease-out), color 0.24s var(--ease-out); }
+  .name {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.25;
+  }
+  .project-card:hover .arrow { color: var(--pink-deep); transform: translate(4px, -4px); }
   .project-card:active .name { opacity: 0.7; }
-  .desc { margin-top: 8px; color: var(--gray-mid); font-size: 14px; }
+  .desc { margin-top: 8px; color: var(--gray-mid); font-size: 0.88rem; line-height: 1.75; }
 </style>

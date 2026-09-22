@@ -3,6 +3,7 @@ import Base from "../layouts/Base.astro";
 import FootprintMap from "../components/FootprintMap.astro";
 import { site } from "../config";
 const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <Base title={`关于 — ${NAME}`}>
@@ -19,7 +20,7 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
           <h2>简历</h2>
           <p>教育与实习经历的完整版本，含联系方式。</p>
         </div>
-        <a href="/resume/" class="u-underline entry-link">查看完整简历 ↗</a>
+        <a href={`${base}/resume/`} class="u-underline entry-link">查看完整简历 ↗</a>
       </section>
 
       <section class="tmi reveal">

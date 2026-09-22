@@ -8,13 +8,14 @@ interface Props {
   href: string;
 }
 const { title, excerpt, date, category, tags, href } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <article class="article-card reveal">
   <div class="meta mono">
     <time datetime={date}>{date}</time>
     <span class="sep">/</span>
-    <a href={`/posts/?cat=${category}`} class="cat">{category}</a>
+    <a href={`${base}/posts/?cat=${category}`} class="cat" data-cat-link>{category}</a>
     <span class="sep">/</span>
     <span class="tags">{tags.map((t) => `#${t}`).join(" ")}</span>
   </div>
