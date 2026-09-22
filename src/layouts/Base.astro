@@ -31,6 +31,11 @@ const { title, description = site.description } = Astro.props;
     <Nav />
     <slot />
     <script>
+      if (import.meta.env.DEV) {
+        import("cssstudio").then((m) => m.startStudio());
+      }
+    </script>
+    <script>
       const io = new IntersectionObserver(
         (entries) => {
           for (const e of entries) {
