@@ -64,4 +64,5 @@
 - **简历页 `/resume/`**：`cv-paper` 容器 + `.cv-section/.cv-label`（mono 大写 + hairline 底线）+ `.cv-item-bullets`（disc 列表，strong 用 ink）+ `.skill-tag`（hairline 边框胶囊，无底色）+ `.resume-slogan`（pink 左竖线引言）；不设导航 tab，入口在关于页 cv-entry 区块
 - **关于页手风琴**：`<details>.acc` 原生语义 + 自绘加减 icon（scaleY 消失动画）+ summary 引号文案用 `--font-display`
 - **足迹地图 FootprintMap**：简笔欧洲 SVG（hairline 描线）+ `.fp-poi-dot` pink 呼吸圆点（poiPulse 2.2s）+ hover 墨底标签；城市数据写死在组件 PLACES 数组，加城市改这一处
-- 「思考」「研究」类文章：正文直接短文成篇；研究类文内放完整版外链
+- **随思随记（关于页 musings）**：短观点语录流——mono 粉色小标 + blockquote 衬线正文（first-letter 用 ink 点睛），不进文章列表；新增随记改 about.astro 的 mus-list
+- 「研究」类文章：正文为摘录 + 文内完整版外链

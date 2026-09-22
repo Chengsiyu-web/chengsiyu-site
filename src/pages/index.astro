@@ -3,6 +3,7 @@ import { getCollection } from "astro:content";
 import Base from "../layouts/Base.astro";
 import Hero from "../components/Hero.astro";
 import ArticleCard from "../components/ArticleCard.astro";
+import Musings from "../components/Musings.astro";
 import ProjectCard from "../components/ProjectCard.astro";
 import projects from "../data/projects.json";
 import { site } from "../config";
@@ -28,6 +29,8 @@ const latest = posts.slice(0, 3);
         {projects.map((p) => <ProjectCard {...p} />)}
       </div>
     </section>
+
+    <Musings />
 
     <section id="latest" class="section">
       <header class="section-head reveal">
@@ -61,8 +64,8 @@ const latest = posts.slice(0, 3);
   .section { margin-top: 128px; }
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 40px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
   }
   .section-head {
     display: flex;

@@ -1,0 +1,104 @@
+---
+// 随思随记（源：老 Portfolio My Thinking，字号/字体/动效按原站规格移植：
+// 纵向 hairline 列表、中文正文标签 + pink 下划线 hover、0.82rem 正文、sr 式浮现）
+// 新条目往 MUSINGS 数组里加即可。
+const MUSINGS = [
+  {
+    cap: "关于 AI PM 的核心能力",
+    text: "AI 产品经理的价值，不在于懂多少技术，而在于判断需求、选择合适的技术栈，知道何时让技术介入。既不能造出没人用的「AI 功能」，也不能只做不考虑技术边界的交互稿——更重要的是想清楚：用户应该看见什么，不应该看见什么。封装层的边界，决定了产品的气质。",
+  },
+  {
+    cap: "关于 AI 狂潮的背后",
+    text: "当所有产品都要加上 Agent 的时候，我觉得更重要的是：需求场景是否存在？是否一定要用 Agent 解决？真正值得用 Agent 的，是必须伸手去拿外部工具、需要让模型去思考完成路径的任务——不是每一个需求都需要套用固定的模式来加冕。",
+  },
+  {
+    cap: "关于 AI 的商业真相",
+    text: "学商科让我养成了一个习惯：先找到钱从哪来，再谈改变世界。任何业务都可以站在宏观的角度思考，用跨行业的视角来辅助理解——无论什么载体（短视频、小说、短剧）背后都是内容分发与消费，思路可以共通。AI 业务也逃不开这个底层逻辑：模型可以租，但商业场景不能借。空烧 token 不是创新，找到真实锚点，护城河才有地基。",
+  },
+];
+---
+
+<section class="musings section">
+  <header class="section-head reveal">
+    <div class="work-label">What I believe about building with AI.</div>
+    <h2>My Thinking</h2>
+  </header>
+  <div class="work-views">
+    {
+      MUSINGS.map((m) => (
+        <div class="work-view-item reveal">
+          <div class="work-view-tag">
+            <span>{m.cap}</span>
+          </div>
+          <div class="work-view-body-wrap">
+            <div class="work-view-body">{m.text}</div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .section-head { margin-bottom: 8px; }
+  .work-label {
+    font-size: 0.78rem;
+    color: var(--gray-mid);
+    letter-spacing: 0.04em;
+    margin-bottom: 4px;
+  }
+  .section-head h2 { font-size: 2rem; }
+
+  .work-views {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    max-width: 960px;
+    padding-bottom: 1.5rem;
+  }
+  .work-view-item {
+    padding: 1.6rem 0;
+    border-top: 1px solid var(--hairline);
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+  }
+  .work-view-item:last-child {
+    border-bottom: 1px solid var(--hairline);
+  }
+  .work-view-tag {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  /* Underline Reveal 动效（源站 1:1：pink、1.5px、左起 scaleX，0.38s） */
+  .work-view-tag span {
+    display: inline-block;
+    position: relative;
+    cursor: default;
+  }
+  .work-view-tag span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 1.5px;
+    background: var(--pink);
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.38s var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .work-view-item:hover .work-view-tag span::after { transform: scaleX(1); }
+  }
+  .work-view-body {
+    font-size: 0.92rem;
+    color: var(--gray-mid);
+    line-height: 1.75;
+    max-width: 72ch;
+  }
+  @media (max-width: 768px) {
+    .section-head h2 { font-size: 1.6rem; }
+  }
+</style>

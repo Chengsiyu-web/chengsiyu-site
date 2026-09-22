@@ -31,7 +31,15 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
   }
   .kicker { color: var(--pink); }
   .count { color: var(--gray-mid); }
+  .list {
+    margin-top: 40px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    align-items: stretch;
+  }
   @media (max-width: 768px) {
     .page-main { padding: 56px 20px 0; }
+    .list { grid-template-columns: 1fr; gap: 16px; }
   }
 </style>

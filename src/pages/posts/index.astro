@@ -11,6 +11,7 @@ const posts = (await getCollection("posts")).sort((a, b) =>
 const categories = [...new Set(posts.map((p) => p.data.category))];
 const allTags = [...new Set(posts.flatMap((p) => p.data.tags))];
 const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <Base title={`文章 — ${NAME}`}>
@@ -39,7 +40,7 @@ const NAME = `${site.firstName} ${site.lastName}`.toUpperCase();
             date={p.data.date}
             category={p.data.category}
             tags={p.data.tags}
-            href={`/posts/${p.id}/`}
+            href={`${base}/posts/${p.id}/`}
           />
         ))
       }
