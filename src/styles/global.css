@@ -54,6 +54,26 @@ button, a { font-family: inherit; }
 .stagger { opacity: 0; transform: translateY(20px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out); }
 .stagger.is-visible { opacity: 1; transform: none; }
 
+/* mask 逐行揭示（Jitter "Project Reveal" 的网页翻译）：容器透明度恒定，
+   文字从遮罩下方升起并带 2° 旋转归正；对称曲线让升降全程可感知 */
+.reveal.reveal-mask { opacity: 1; transform: none; transition: none; }
+.reveal-mask .mask-line { display: block; overflow: hidden; padding-bottom: 0.1em; margin-bottom: -0.1em; }
+.reveal-mask .mask-inner {
+  display: block;
+  transform: translateY(118%) rotate(2deg);
+  transform-origin: left top;
+  transition: transform 0.9s cubic-bezier(0.65, 0, 0.35, 1) 0.12s;
+}
+.reveal-mask.is-visible .mask-inner { transform: none; }
+
+/* blur 聚焦入场（Jitter "Blur: Article Gallery [iOS]"）：模糊→清晰 + 上浮 */
+.reveal.reveal-blur { filter: blur(10px); transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out), filter 0.6s var(--ease-out); }
+.reveal-blur.is-visible { filter: none; }
+
+/* 面板入场重播的保持态：重置期间整树禁用过渡，隐藏态瞬时锁定
+   （index.astro go() 挂/摘，覆盖后代选择器驱动的 clip/img 等属性） */
+.replay-hold, .replay-hold * { transition: none !important; }
+
 /* 分屏切换（源：老 Portfolio screen 机制：面板叠放 + 内部滚动，文档不滚）
    --dir 由 index.astro go() 注入（向下翻 +1 / 向上翻 -1）：
    旧面板向滚动方向滑出 40% 并轻微缩小（退后），新面板从 60% 处推入盖上来。
@@ -98,6 +118,8 @@ button, a { font-family: inherit; }
 
 @media (prefers-reduced-motion: reduce) {
   .reveal, .stagger { opacity: 1; transform: none; transition: none; }
+  .reveal-mask .mask-inner { transform: none; transition: none; }
+  .reveal-blur { filter: none; transition: none; }
   .screen-panel { transition: opacity 0.15s linear; transform: none; }
   .u-underline::after { transition: none; }
   * { scroll-behavior: auto; }

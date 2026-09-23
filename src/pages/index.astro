@@ -97,19 +97,30 @@ const latest = posts.slice(0, 3);
     const dir = idx > cur ? 1 : -1;
     to.style.setProperty("--dir", dir);
     from.style.setProperty("--dir", dir);
+    // 面板叠放导致 IO 在加载时已把未激活面板内的入场元素提前触发——
+    // 激活前重置回隐藏态再重放。reset 期间给面板挂 .replay-hold（global.css：
+    // 整树 transition:none !important）锁定隐藏态：clip/img 这类由祖先
+    // is-visible 后代选择器驱动的属性，若不禁用子孙 transition，remove→add
+    // 两帧间会折返，净位移≈0
+    const items = to.querySelectorAll(".reveal, .stagger");
+    items.forEach((el) => el.classList.remove("is-visible"));
+    to.classList.add("replay-hold");
     to.classList.remove("screen-leaving");
     // 无过渡把待入面板摆到入场起点（60% 视口外），下一帧再放开过渡推入
     to.style.transition = "none";
     to.style.transform = "translateY(" + dir * 60 + "%)";
     to.style.opacity = "0";
+    void to.offsetWidth;
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
+        to.classList.remove("replay-hold");
         to.style.transition = "";
         from.classList.remove("screen-active");
         from.classList.add("screen-leaving");
         to.classList.add("screen-active");
         to.style.transform = "";
         to.style.opacity = "";
+        items.forEach((el) => el.classList.add("is-visible"));
         cur = idx;
         setTimeout(() => {
           from.classList.remove("screen-leaving");

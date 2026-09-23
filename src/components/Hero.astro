@@ -6,8 +6,10 @@ const socials = site.socials;
 <section class="cover">
   <div class="cover-inner">
     <div class="issue mono reveal">{site.issue}</div>
-    <h1 class="reveal">
-      {site.greetingLead} <span class="pink-word">{site.pinkWord}</span>
+    <h1 class="reveal reveal-mask">
+      <span class="mask-line">
+        <span class="mask-inner">{site.greetingLead} <span class="pink-word">{site.pinkWord}</span></span>
+      </span>
     </h1>
     <p class="intro reveal">
       我是<strong>程思语</strong>，{site.tagline}
@@ -26,6 +28,15 @@ const socials = site.socials;
       }
     </ul>
     <a href="#work-panel" class="scroll-cue mono" data-next-screen="1" aria-label="向下查看项目">SCROLL ↓</a>
+  </div>
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {[0, 1].map((n) => (
+        <span class="marquee-copy">
+          AI PRODUCT <i>·</i> AGENT <i>·</i> 跨境电商 <i>·</i> 意大利交换 <i>·</i> 舞蹈 <i>·</i> VIBE CODING <i>·</i>
+        </span>
+      ))}
+    </div>
   </div>
 </section>
 
@@ -97,9 +108,40 @@ const socials = site.socials;
   .social-link:hover { color: var(--pink); }
   .scroll-cue {
     position: absolute;
-    bottom: 32px;
+    bottom: 76px;
     left: 40px;
     color: var(--gray-dim-dark);
+  }
+  .marquee {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid var(--hairline-dark);
+    overflow: hidden;
+    padding: 13px 0;
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 36s linear infinite;
+  }
+  .marquee-copy {
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    white-space: nowrap;
+    color: var(--gray-dim-dark);
+  }
+  .marquee-copy i { font-style: normal; color: var(--pink); padding: 0 1.6em; }
+  @media (hover: hover) and (pointer: fine) {
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+  }
+  @keyframes marquee {
+    to { transform: translateX(-50%); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
   }
   @media (max-width: 768px) {
     .cover-inner { padding: 96px 20px; }
