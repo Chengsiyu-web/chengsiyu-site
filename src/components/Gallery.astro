@@ -1,75 +1,155 @@
 ---
-// Hero 右侧个人照墙：竖幅照片错落布局（源方案：左右两列 stagger reveal）
-// 换照片：替换 public/images/gallery/ 下的文件并改 PHOTOS（挑竖幅 2:3~9:16 比例最佳）
+// Hero 右侧个人照轮播：居中聚焦 coverflow（jitter "Gallery: Scroll" 的网页翻译）
+// 中心照片放大清晰，邻照缩小后退变暗，切换时全队列平滑交接。
+// 换照片：替换 public/images/gallery/ 下的文件并改 PHOTOS（竖构图最佳）。
 const PHOTOS = [
   { src: "/images/gallery/03d4835b5b40b2bc16a36b161d7614fc.jpg", alt: "个人照一" },
   { src: "/images/gallery/0b707d013dcce8cddc479128aaa8c614.jpg", alt: "个人照二" },
   { src: "/images/gallery/512e7c57a729804b0fcb0072168d3c5b.jpg", alt: "个人照三" },
   { src: "/images/gallery/971d41cea24a2a9b8423b2853bdac30a.jpg", alt: "个人照四" },
-  { src: "/images/gallery/e995a7d1903948eab41c4d0c1bb716df.jpg", alt: "个人照五" },
-  { src: "/images/gallery/22810c47c9b788f15518438905eb62c3.jpg", alt: "个人照六" },
+  { src: "/images/gallery/b7a295706b139d600cbbd5c85ae09db3.jpg", alt: "个人照五" },
+  { src: "/images/gallery/d0230f2ded70f51dc883862d454cc4ce.jpg", alt: "个人照六" },
+  { src: "/images/gallery/e995a7d1903948eab41c4d0c1bb716df.jpg", alt: "个人照七" },
+  { src: "/images/gallery/22810c47c9b788f15518438905eb62c3.jpg", alt: "个人照八" },
 ];
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<div class="gallery" aria-label="个人照片墙">
-  {
-    PHOTOS.map((p, i) => (
-      <figure class={`ph ph-${i + 1} stagger`} data-d={i % 3 + 1}>
-        <img src={`${base}${p.src}`} alt={p.alt} loading="eager" />
-      </figure>
-    ))
-  }
+<div class="carou" role="region" aria-roledescription="照片轮播" aria-label="个人照片" tabindex="0" data-carousel>
+  <div class="track">
+    {
+      PHOTOS.map((p, i) => (
+        <button class="slide" data-slide={i} aria-label={`第 ${i + 1} 张，点击居中查看`}>
+          <img src={`${base}${p.src}`} alt={p.alt} loading={i < 2 ? "eager" : "lazy"} draggable="false" />
+        </button>
+      ))
+    }
+  </div>
+  <div class="dots" role="tablist" aria-label="照片位置">
+    {PHOTOS.map((_, i) => <button class="dot" data-dot={i} aria-label={`第 ${i + 1} 张`} />)}
+  </div>
 </div>
 
+<script>
+  const root = document.querySelector("[data-carousel]");
+  if (root) {
+    const slides = Array.from(root.querySelectorAll(".slide"));
+    const dots = Array.from(root.querySelectorAll(".dot"));
+    const N = slides.length;
+    let cur = 0;
+    let timer = 0;
+
+    // offset：以 cur 为 0 的环形距离（-N/2..N/2），驱动 CSS 变量做 transform
+    const offsetOf = (i) => {
+      let o = i - cur;
+      if (o > N / 2) o -= N;
+      if (o < -N / 2) o += N;
+      return o;
+    };
+    const apply = () => {
+      slides.forEach((el, i) => {
+        const o = offsetOf(i);
+        el.style.setProperty("--o", o);
+        el.setAttribute("aria-hidden", String(Math.abs(o) > 1));
+        el.tabIndex = -1;
+      });
+      dots.forEach((d, i) => d.classList.toggle("on", i === cur));
+    };
+    const go = (i) => {
+      cur = ((i % N) + N) % N;
+      apply();
+    };
+    const arm = () => {
+      clearInterval(timer);
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      timer = setInterval(() => go(cur + 1), 4500);
+    };
+
+    slides.forEach((el, i) => el.addEventListener("click", () => { go(i); arm(); }));
+    dots.forEach((d, i) => d.addEventListener("click", () => { go(i); arm(); }));
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") { go(cur + 1); arm(); }
+      if (e.key === "ArrowLeft") { go(cur - 1); arm(); }
+    });
+    // hover / 页面隐藏时暂停自动轮播
+    root.addEventListener("mouseenter", () => clearInterval(timer));
+    root.addEventListener("mouseleave", arm);
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) clearInterval(timer); else arm();
+    });
+
+    apply();
+    arm();
+  }
+</script>
+
 <style>
-  .gallery {
+  .carou {
     position: relative;
     width: 30rem;
     flex: none;
-    aspect-ratio: 30 / 36;
+    height: 34rem;
+    outline: none;
   }
-  .ph {
+  .carou:focus-visible .track { outline: 2px solid var(--pink); outline-offset: 8px; border-radius: 8px; }
+  .track {
     position: absolute;
-    overflow: visible;
-    margin: 0;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  .ph img {
+  .slide {
+    position: absolute;
+    width: 82%;
+    aspect-ratio: 3 / 4;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    /* --o：距中心的环形 offset（JS 注入）。位移 ×6.4rem，远端越远越缩越小 */
+    transform: translateX(calc(var(--o) * 6.4rem)) scale(calc(1 - min(var(--ao, 0) * 0.24, 0.48)));
+    --ao: calc(var(--o) * var(--o)); /* 近似 |o| 的平方，避免 sqrt；中心为 0 */
+    z-index: calc(10 - min(var(--ao, 0), 9));
+    opacity: calc(1 - min(var(--ao) * 0.4, 0.75));
+    filter: brightness(calc(1 - min(var(--ao) * 0.35, 0.45))) blur(calc(min(var(--ao) * 0.07rem, 0.15rem)));
+    transition: transform 0.72s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.72s cubic-bezier(0.65, 0, 0.35, 1), filter 0.72s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .slide img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 6px;
     background: var(--pink-lt);
-    transition: transform 0.42s var(--ease-out), box-shadow 0.42s var(--ease-out);
+    user-select: none;
   }
-  /* 错落构图：六张分布两列，各自旋转 ±3° 内、尺寸两档 */
-  .ph-1 { width: 56%; left: 0; top: 0; aspect-ratio: 3/4; rotate: -2.4deg; z-index: 1; }
-  .ph-2 { width: 38%; right: 0; top: 6%; aspect-ratio: 2/3; rotate: 2.2deg; z-index: 2; }
-  .ph-3 { width: 34%; left: 8%; top: 38%; aspect-ratio: 3/4; rotate: 1.8deg; z-index: 3; }
-  .ph-4 { width: 46%; right: 0; top: 42%; aspect-ratio: 3/4; rotate: -1.6deg; z-index: 2; }
-  .ph-5 { width: 30%; left: 0; top: 72%; aspect-ratio: 2/3; rotate: 2.6deg; z-index: 1; }
-  .ph-6 { width: 42%; right: 6%; top: 76%; aspect-ratio: 2/3; rotate: -2deg; z-index: 3; }
-
-  @media (hover: hover) and (pointer: fine) {
-    .ph:hover img {
-      transform: scale(1.04) rotate(0deg);
-      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
-    }
-    .ph-1:hover img { transform: scale(1.04) rotate(2.4deg); }
-    .ph-2:hover img { transform: scale(1.04) rotate(-2.2deg); }
-    .ph-3:hover img { transform: scale(1.04) rotate(-1.8deg); }
-    .ph-4:hover img { transform: scale(1.04) rotate(1.6deg); }
-    .ph-5:hover img { transform: scale(1.04) rotate(-2.6deg); }
-    .ph-6:hover img { transform: scale(1.04) rotate(2deg); }
+  .dots {
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
   }
-  /* stagger 基类在 global.css；照片墙再加自己的错峰入场（浮起 + 旋转归位） */
-  .ph.stagger { transform: translateY(26px) rotate(var(--r, 0deg)); opacity: 0; }
-  .ph-1 { --r: -6deg; } .ph-2 { --r: 5deg; } .ph-3 { --r: -4deg; }
-  .ph-4 { --r: 4deg; } .ph-5 { --r: -5deg; } .ph-6 { --r: 5deg; }
-  .ph.stagger.is-visible { transform: none; opacity: 1; }
+  .dot {
+    width: 6px;
+    height: 6px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: var(--gray-dim-dark);
+    opacity: 0.5;
+    cursor: pointer;
+    transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out), background 0.3s var(--ease-out);
+  }
+  .dot.on { background: var(--pink); opacity: 1; transform: scale(1.5); }
 
+  @media (prefers-reduced-motion: reduce) {
+    .slide { transition: none; }
+  }
   @media (max-width: 1023px) {
-    .gallery { display: none; }
+    .carou { display: none; }
   }
 </style>
