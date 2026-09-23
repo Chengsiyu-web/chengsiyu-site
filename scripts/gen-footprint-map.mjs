@@ -4,24 +4,24 @@ import fs from "node:fs";
 
 // 城市级 pin：真实经纬度
 const PINS = [
-  // 中国 13
+  // 中国 13（视觉微偏移防网格吸附重叠）
   { lat: 39.9, lng: 116.4 },   // 北京
   { lat: 36.7, lng: 117.0 },   // 济南（山东）
-  { lat: 38.9, lng: 121.6 },   // 大连
-  { lat: 31.2, lng: 121.5 },   // 上海
-  { lat: 30.3, lng: 120.2 },   // 杭州（江浙沪）
-  { lat: 24.9, lng: 118.6 },   // 泉州
-  { lat: 26.1, lng: 119.3 },   // 福州
-  { lat: 23.1, lng: 113.3 },   // 广州
-  { lat: 22.3, lng: 114.2 },   // 香港
-  { lat: 30.7, lng: 104.1 },   // 成都（四川）
-  { lat: 29.6, lng: 106.5 },   // 重庆
-  { lat: 25.6, lng: 100.3 },   // 大理
-  { lat: 25.0, lng: 98.5 },    // 腾冲
+  { lat: 39.4, lng: 122.3 },   // 大连（微移出海方向）
+  { lat: 31.6, lng: 122.2 },   // 上海（微移）
+  { lat: 29.8, lng: 119.8 },   // 杭州（江浙沪，微移）
+  { lat: 24.1, lng: 119.6 },   // 泉州（再移）
+  { lat: 27.1, lng: 120.6 },   // 福州（再移）
+  { lat: 23.4, lng: 112.8 },   // 广州（微移）
+  { lat: 22.0, lng: 114.8 },   // 香港（微移）
+  { lat: 30.9, lng: 103.7 },   // 成都（四川，微移）
+  { lat: 29.4, lng: 107.1 },   // 重庆（微移）
+  { lat: 25.8, lng: 100.9 },   // 大理（微移）
+  { lat: 24.7, lng: 98.1 },    // 腾冲（微移）
   // 日本 3
-  { lat: 35.7, lng: 139.7 },   // 东京
-  { lat: 35.0, lng: 135.8 },   // 京都
-  { lat: 34.7, lng: 135.5 },   // 大阪
+  { lat: 36.2, lng: 140.4 },   // 东京（微移）
+  { lat: 35.2, lng: 136.2 },   // 京都（微移）
+  { lat: 34.3, lng: 134.9 },   // 大阪（微移）
   // 意大利 4
   { lat: 41.9, lng: 12.5 },    // 罗马
   { lat: 43.8, lng: 11.3 },    // 佛罗伦萨
@@ -38,18 +38,18 @@ const PINS = [
   { lat: 50.1, lng: 14.4 },    // 布拉格
 ];
 
-const map = new DottedMap({ height: 46, grid: "diagonal" });
+const map = new DottedMap({ height: 62, grid: "diagonal" });
 
 for (const p of PINS) {
   map.addPin({
     lat: p.lat,
     lng: p.lng,
-    svgOptions: { color: "#B88080", radius: 0.55 },
+    svgOptions: { color: "#B88080", radius: 0.7 },
   });
 }
 
 const svg = map.getSVG({
-  radius: 0.22,
+  radius: 0.26,
   color: "#9E9890",
   shape: "circle",
   backgroundColor: "transparent",
