@@ -1,42 +1,42 @@
 ---
-// 足迹地图：意大利交换 + 南法走过的城市（源：老 Portfolio 未完成的 tmi-map 设计，在此做完）
-const PLACES = [
-  { name: "罗马", en: "Roma", x: 47.5, y: 62, note: "交换学年 · Luiss" },
-  { name: "米兰", en: "Milano", x: 40, y: 38, note: "时装周与大教堂" },
-  { name: "威尼斯", en: "Venezia", x: 55, y: 32, note: "水城的雨季" },
-  { name: "佛罗伦萨", en: "Firenze", x: 46, y: 55, note: "文艺复兴的原点" },
-  { name: "那不勒斯", en: "Napoli", x: 53.5, y: 75, note: "披萨与海湾" },
-  { name: "南法", en: "Côte d'Azur", x: 32, y: 63, note: "最澄澈的海" },
+// 足迹地图：dotted-map 生成的世界点阵（scripts/gen-footprint-map.mjs）
+// 27 城市级 pin。国家标签常显，hover 展开该国城市清单；意大利（交换学年）呼吸强调。
+// 改去过的地方：改 scripts/gen-footprint-map.mjs 的 PINS + 本文件 COUNTRIES，重跑脚本。
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const COUNTRIES = [
+  {
+    name: "CHINA", x: 83.5, y: 41.4, anchor: "left",
+    cities: ["北京", "济南", "大连", "上海", "杭州", "泉州", "福州", "广州", "香港", "成都", "重庆", "大理", "腾冲"],
+  },
+  { name: "JAPAN", x: 91.8, y: 37.7, anchor: "left", cities: ["东京", "京都", "大阪"] },
+  { name: "ITALY", x: 53.3, y: 33.9, anchor: "right", pulse: true, cities: ["罗马", "佛罗伦萨", "威尼斯", "米兰", "交换一学年"] },
+  { name: "FRANCE", x: 51.6, y: 32.0, anchor: "right", cities: ["巴黎", "尼斯（南法）"] },
+  { name: "SPAIN", x: 51.1, y: 33.9, anchor: "right", cities: ["巴塞罗那"] },
+  { name: "CZECH", x: 54.4, y: 26.4, anchor: "left", cities: ["布拉格"] },
+  { name: "HUNGARY", x: 56.0, y: 28.2, anchor: "left", cities: ["布达佩斯"] },
+  { name: "DENMARK", x: 53.8, y: 20.7, anchor: "left", cities: ["哥本哈根"] },
+  { name: "ICELAND", x: 43.4, y: 11.3, anchor: "left", cities: ["雷克雅未克"] },
 ];
 ---
 
 <div class="footprint">
   <div class="fp-label">足迹👣</div>
   <div class="fp-map">
-    <svg viewBox="0 0 100 88" class="fp-svg" role="img" aria-label="欧洲西南部示意地图，标注走过六个城市">
-      <!-- 伊比利亚半岛 -->
-      <path d="M6 30 L10 22 L22 18 L28 24 L27 34 L22 44 L14 46 L8 40 Z" />
-      <!-- 法国 -->
-      <path d="M22 18 L28 24 L34 22 L38 28 L36 38 L40 44 L36 52 L30 56 L27 44 L22 44 Z" />
-      <!-- 意大利（靴形，理想化简笔） -->
-      <path d="M42 34 L48 32 L50 38 L56 36 L58 42 L54 48 L56 54 L58 60 L55 66 L52 62 L49 56 L46 52 L44 44 Z" />
-      <path d="M55 66 L58 66 L60 72 L57 76 L55 71 Z" />
-      <!-- 阿尔卑斯以北的中欧一角 -->
-      <path d="M36 14 L46 12 L56 14 L58 22 L52 30 L44 32 L38 28 L34 22 Z" />
-      <!-- 亚得里亚海东岸 -->
-      <path d="M58 42 L64 44 L66 52 L62 58 L58 60 L58 52 Z" />
-    </svg>
-    {PLACES.map((p) => (
-      <div class="fp-poi" style={`left:${p.x}%;top:${p.y}%`}>
-        <span class="fp-poi-dot"></span>
-        <span class="fp-poi-label">
-          <b>{p.name}</b>
-          <i>{p.note}</i>
-        </span>
-      </div>
-    ))}
+    <img src={`${base}/images/footprint-map.svg`} alt="世界点阵地图，标记去过的地方" class="fp-svg" loading="lazy" />
+    {
+      COUNTRIES.map((c) => (
+        <div class={`fp-country ${c.anchor === "right" ? "anchor-right" : ""}`} style={`left:${c.x}%;top:${c.y}%`}>
+          {c.pulse && <span class="fp-pulse-dot" aria-hidden="true" />}
+          <span class="fp-country-name mono">{c.name}</span>
+          <span class="fp-cities">
+            {c.cities.map((city) => <i>{city}</i>)}
+          </span>
+        </div>
+      ))
+    }
   </div>
-  <div class="fp-hint mono">· 意大利十几个城市的完整足迹，慢慢补全</div>
+  <div class="fp-hint mono">· 去过的地方 · 9 国 27 城，慢慢补全</div>
 </div>
 
 <style>
@@ -44,56 +44,82 @@ const PLACES = [
   .fp-label { color: var(--gray-mid); margin-bottom: 10px; display: block; font-size: 17px; }
   .fp-map {
     position: relative;
-    background: var(--paper);
+    background: var(--bg-warm);
     border: 1px solid var(--hairline);
     border-radius: 8px;
-    padding: 20px 12px 8px;
+    padding: 24px 16px 20px;
   }
   .fp-svg { width: 100%; height: auto; display: block; }
-  .fp-svg path {
-    fill: none;
-    stroke: var(--hairline);
-    stroke-width: 0.7;
-    stroke-linejoin: round;
-  }
-  .fp-poi {
+
+  /* 国家标签：锚在 pin 上，anchor 决定往左还是往右展开 */
+  .fp-country {
     position: absolute;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 3px;
+    gap: 6px;
+    cursor: default;
   }
-  .fp-poi-dot {
-    width: 7px; height: 7px;
+  .fp-country.anchor-right {
+    transform: translate(-100%, -50%);
+    flex-direction: row-reverse;
+  }
+  .fp-country-name {
+    color: var(--gray-mid);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    transition: color 0.24s var(--ease-out);
+  }
+  .fp-country:hover .fp-country-name { color: var(--pink-deep); }
+
+  /* 意大利主场：呼吸圆点 */
+  .fp-pulse-dot {
+    width: 6px;
+    height: 6px;
     border-radius: 50%;
-    background: var(--pink);
-    box-shadow: 0 0 0 3px rgba(242, 184, 198, 0.35);
+    background: var(--pink-deep);
+    box-shadow: 0 0 0 3px rgba(184, 128, 128, 0.3);
     animation: poiPulse 2.2s ease infinite;
+    flex: none;
   }
   @media (prefers-reduced-motion: reduce) {
-    .fp-poi-dot { animation: none; }
+    .fp-pulse-dot { animation: none; }
   }
   @keyframes poiPulse {
-    0%, 100% { box-shadow: 0 0 0 3px rgba(242, 184, 198, 0.35); }
-    50% { box-shadow: 0 0 0 7px rgba(242, 184, 198, 0.12); }
+    0%, 100% { box-shadow: 0 0 0 3px rgba(184, 128, 128, 0.3); }
+    50% { box-shadow: 0 0 0 7px rgba(184, 128, 128, 0.1); }
   }
-  .fp-poi-label {
+
+  /* hover 城市清单 */
+  .fp-cities {
     display: none;
     position: absolute;
-    bottom: calc(100% + 6px);
-    left: 50%;
-    transform: translateX(-50%);
-    white-space: nowrap;
+    top: -8px;
     background: var(--ink);
-    padding: 6px 10px;
+    padding: 10px 14px;
     border-radius: 4px;
     z-index: 2;
+    white-space: nowrap;
+    max-width: 260px;
+    flex-wrap: wrap;
+    gap: 2px 10px;
   }
-  .fp-poi-label b { display: block; color: var(--paper); font-size: 12px; font-weight: 600; }
-  .fp-poi-label i { display: block; color: var(--gray-dim-dark); font-size: 10.5px; font-style: normal; margin-top: 1px; }
+  .fp-country:not(.anchor-right) .fp-cities { left: calc(100% + 10px); }
+  .fp-country.anchor-right .fp-cities { right: calc(100% + 10px); }
+  .fp-cities i {
+    font-style: normal;
+    color: var(--gray-dim-dark);
+    font-size: 11.5px;
+    display: inline-block;
+  }
+  .fp-cities i:first-child { color: var(--paper); }
   @media (hover: hover) and (pointer: fine) {
-    .fp-poi:hover .fp-poi-label { display: block; }
+    .fp-country:hover .fp-cities { display: inline-flex; }
   }
+
   .fp-hint { color: var(--gray-mid); margin-top: 10px; font-size: 11px; letter-spacing: 0.06em; }
+
+  @media (max-width: 768px) {
+    .fp-cities { display: none !important; }
+  }
 </style>

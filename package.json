@@ -19,5 +19,8 @@
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "dotted-map": "^3.1.0"
   }
 }
