@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   <main class="page-main">
     <header class="page-head reveal">
       <p class="mono kicker">ABOUT</p>
-      <h1>关于</h1>
+      <h1>关于我</h1>
     </header>
 
     <div class="about-body">
@@ -27,14 +27,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
         <p class="mono tmi-label">TOO MUCH INFORMATION</p>
         <h2 class="tmi-title">简历以外的我</h2>
 
-        <details class="acc" open>
+        <details class="acc">
           <summary>
             <span class="acc-quote">命运所有的雨季，都是为了回到最初的洋流。</span>
             <span class="acc-icon" aria-hidden="true"></span>
           </summary>
-          <div class="acc-body">
-            <p>在意大利的一年，也许算我驶出既定轨道的一段日子。人生的雨季里，既有在异国他乡遇到过的困难和煎熬，也有独自走过十几个城市所见过的风景。我想我不会忘记某个连日阴雨后看到最澄澈的南法的海，不会忘记在意大利下课后去兼职当舞蹈老师的日子，也不会忘记和来自五湖四海的同学用英文争论各自国家视角下的国际局势。</p>
-          </div>
+          <div class="acc-body-wrap"><div class="acc-body">
+            <p>在意大利的一年，也许算我驶出既定轨道的一段日子。人生的雨季里，既有在异国他乡遇到过的困难和煎熬，也有独自走过十几个城市所见过的风景。我想我不会忘记某个连日阴雨后看到最澄澈的南法的海，不会忘记在意大利下课后从公交车上下来，去兼职当舞蹈老师的日子，也不会忘记和来自五湖四海的同学用英文争论各自国家视角下的国际局势的时光。</p>
+          </div></div>
         </details>
 
         <details class="acc">
@@ -42,9 +42,9 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
             <span class="acc-quote">要一起跳舞吗？</span>
             <span class="acc-icon" aria-hidden="true"></span>
           </summary>
-          <div class="acc-body">
+          <div class="acc-body-wrap"><div class="acc-body">
             <p>平平无奇的跳舞人和校园舞蹈博主，从 Kpop 跳到 Urban/Hiphop，在跳舞还需要持续进步，欢迎来找我跳舞。</p>
-          </div>
+          </div></div>
         </details>
 
         <details class="acc">
@@ -52,12 +52,12 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
             <span class="acc-quote">在什么都要"垂直"的时代，我想要做一棵树。</span>
             <span class="acc-icon" aria-hidden="true"></span>
           </summary>
-          <div class="acc-body">
+          <div class="acc-body-wrap"><div class="acc-body">
             <p>在学校，作为商科学生，我学习企业战略、管理学、会计学，在宏观视角和具体科目之间寻找理解商业的方式。</p>
             <p>交换那一年，我从国际政治、欧盟经济法的角度重塑了自己的国际认知——这不是我的专业方向，但我想驱动自己去了解更广阔的世界，和构成现状的复杂历史背景。</p>
             <p>开始进入互联网公司实习之后，AI 在我面前打开了一个潘多拉魔盒。我在 FOMO 中坚持前行，努力完善自己的技术视角，从一个完全的计算机小白，到能够自己 vibe coding 项目。我始终保持对新事物的好奇心，希望能让 AI 帮助我提升效率，希望能用 AI 做一些有趣的、有用的事情。</p>
             <p>我也曾困扰于"垂直"在这个时代的重要性，但我不想把自己打造成深深契合某个岗位的螺丝钉，而是一个可以随时生长的树。</p>
-          </div>
+          </div></div>
         </details>
       </section>
 
@@ -81,7 +81,7 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   .page-main {
     max-width: 44rem;
     margin: 0 auto;
-    padding: 96px 24px 0;
+    padding: 96px 10px 0 24px;
   }
   .page-head h1 {
     font-size: clamp(2.8rem, 6vw, 4.5rem);
@@ -100,14 +100,14 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
     border-bottom: 1px solid var(--hairline);
     padding: 28px 0;
   }
-  .entry-label { color: var(--pink); }
+  .entry-label { color: var(--pink); font-size: 17px; }
   .entry-text h2 { font-size: 1.35rem; }
   .entry-text p { margin-top: 4px; color: var(--gray-mid); font-size: 13.5px; }
   .entry-link { font-family: var(--font-display); font-size: 0.95rem; white-space: nowrap; }
 
   /* TMI 手风琴 */
-  .tmi-label { color: var(--gray-mid); }
-  .tmi-title { font-size: clamp(1.8rem, 4vw, 2.4rem); margin: 8px 0 20px; }
+  .tmi-label { color: var(--gray-mid); opacity: 0.16; }
+  .tmi-title { font-size: 16px; margin: 8px 0 20px; }
 
   .acc {
     border-top: 1px solid var(--hairline);
@@ -147,10 +147,19 @@ const base = import.meta.env.BASE_URL.replace(/\/$/, "");
   .acc-icon::before { left: 0; top: 5px; width: 11px; height: 1.5px; }
   .acc-icon::after { left: 4.75px; top: 0; width: 1.5px; height: 11px; }
   .acc[open] .acc-icon::after { transform: scaleY(0); }
+  /* 展开动效：grid-rows 0fr→1fr 让内容高度平滑生长（源：老 Portfolio acc-body-wrap 机制） */
+  .acc-body-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.42s var(--ease-out);
+  }
+  .acc[open] .acc-body-wrap { grid-template-rows: 1fr; }
+  .acc-body-wrap > .acc-body { overflow: hidden; min-height: 0; }
   .acc-body {
-    padding: 0 0.2rem 1.6rem;
+    padding: 0 0.2rem 0;
     max-width: 62ch;
   }
+  .acc[open] .acc-body { padding-bottom: 1.6rem; }
   .acc-body p {
     font-size: 14.5px;
     color: var(--gray-mid);
