@@ -1,32 +1,36 @@
 ---
 import { site } from "../config";
+import Gallery from "./Gallery.astro";
 const socials = site.socials;
 ---
 
 <section class="cover">
   <div class="cover-inner">
-    <div class="issue mono reveal">{site.issue}</div>
-    <h1 class="reveal reveal-mask">
-      <span class="mask-line">
-        <span class="mask-inner">{site.greetingLead} <span class="pink-word">{site.pinkWord}</span></span>
-      </span>
-    </h1>
-    <p class="intro reveal">
-      我是<strong>程思语</strong>，{site.tagline}
-    </p>
-    <p class="now reveal">
-      <span class="now-label mono">RECENTLY</span>{site.now}
-    </p>
-    <ul class="socials reveal">
-      {
-        socials.map((s) => (
-          <li>
-            <span class="mono social-label">{s.label}</span>
-            <a href={s.href} class="social-link u-underline">{s.display}</a>
-          </li>
-        ))
-      }
-    </ul>
+    <div class="cover-main">
+      <div class="issue mono reveal">{site.issue}</div>
+      <h1 class="reveal reveal-mask">
+        <span class="mask-line">
+          <span class="mask-inner">{site.greetingLead} <span class="pink-word">{site.pinkWord}</span></span>
+        </span>
+      </h1>
+      <p class="intro reveal">
+        我是<strong>程思语</strong>，{site.tagline}
+      </p>
+      <p class="now reveal">
+        <span class="now-label mono">RECENTLY</span>{site.now}
+      </p>
+      <ul class="socials reveal">
+        {
+          socials.map((s) => (
+            <li>
+              <span class="mono social-label">{s.label}</span>
+              <a href={s.href} class="social-link u-underline">{s.display}</a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <Gallery />
     <a href="#work-panel" class="scroll-cue mono" data-next-screen="1" aria-label="向下查看项目">SCROLL ↓</a>
   </div>
   <div class="marquee" aria-hidden="true">
@@ -50,11 +54,15 @@ const socials = site.socials;
     position: relative;
   }
   .cover-inner {
-    max-width: 72rem;
+    max-width: 78rem;
     margin: 0 auto;
-    padding: 120px 40px;
+    padding: 100px 40px;
     width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 64px;
   }
+  .cover-main { flex: 1; min-width: 0; }
   .issue {
     display: inline-block;
     background: var(--pink);

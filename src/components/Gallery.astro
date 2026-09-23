@@ -1,0 +1,75 @@
+---
+// Hero 右侧个人照墙：竖幅照片错落布局（源方案：左右两列 stagger reveal）
+// 换照片：替换 public/images/gallery/ 下的文件并改 PHOTOS（挑竖幅 2:3~9:16 比例最佳）
+const PHOTOS = [
+  { src: "/images/gallery/03d4835b5b40b2bc16a36b161d7614fc.jpg", alt: "个人照一" },
+  { src: "/images/gallery/0b707d013dcce8cddc479128aaa8c614.jpg", alt: "个人照二" },
+  { src: "/images/gallery/512e7c57a729804b0fcb0072168d3c5b.jpg", alt: "个人照三" },
+  { src: "/images/gallery/971d41cea24a2a9b8423b2853bdac30a.jpg", alt: "个人照四" },
+  { src: "/images/gallery/e995a7d1903948eab41c4d0c1bb716df.jpg", alt: "个人照五" },
+  { src: "/images/gallery/22810c47c9b788f15518438905eb62c3.jpg", alt: "个人照六" },
+];
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+---
+
+<div class="gallery" aria-label="个人照片墙">
+  {
+    PHOTOS.map((p, i) => (
+      <figure class={`ph ph-${i + 1} stagger`} data-d={i % 3 + 1}>
+        <img src={`${base}${p.src}`} alt={p.alt} loading="eager" />
+      </figure>
+    ))
+  }
+</div>
+
+<style>
+  .gallery {
+    position: relative;
+    width: 30rem;
+    flex: none;
+    aspect-ratio: 30 / 36;
+  }
+  .ph {
+    position: absolute;
+    overflow: visible;
+    margin: 0;
+  }
+  .ph img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--pink-lt);
+    transition: transform 0.42s var(--ease-out), box-shadow 0.42s var(--ease-out);
+  }
+  /* 错落构图：六张分布两列，各自旋转 ±3° 内、尺寸两档 */
+  .ph-1 { width: 56%; left: 0; top: 0; aspect-ratio: 3/4; rotate: -2.4deg; z-index: 1; }
+  .ph-2 { width: 38%; right: 0; top: 6%; aspect-ratio: 2/3; rotate: 2.2deg; z-index: 2; }
+  .ph-3 { width: 34%; left: 8%; top: 38%; aspect-ratio: 3/4; rotate: 1.8deg; z-index: 3; }
+  .ph-4 { width: 46%; right: 0; top: 42%; aspect-ratio: 3/4; rotate: -1.6deg; z-index: 2; }
+  .ph-5 { width: 30%; left: 0; top: 72%; aspect-ratio: 2/3; rotate: 2.6deg; z-index: 1; }
+  .ph-6 { width: 42%; right: 6%; top: 76%; aspect-ratio: 2/3; rotate: -2deg; z-index: 3; }
+
+  @media (hover: hover) and (pointer: fine) {
+    .ph:hover img {
+      transform: scale(1.04) rotate(0deg);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45);
+    }
+    .ph-1:hover img { transform: scale(1.04) rotate(2.4deg); }
+    .ph-2:hover img { transform: scale(1.04) rotate(-2.2deg); }
+    .ph-3:hover img { transform: scale(1.04) rotate(-1.8deg); }
+    .ph-4:hover img { transform: scale(1.04) rotate(1.6deg); }
+    .ph-5:hover img { transform: scale(1.04) rotate(-2.6deg); }
+    .ph-6:hover img { transform: scale(1.04) rotate(2deg); }
+  }
+  /* stagger 基类在 global.css；照片墙再加自己的错峰入场（浮起 + 旋转归位） */
+  .ph.stagger { transform: translateY(26px) rotate(var(--r, 0deg)); opacity: 0; }
+  .ph-1 { --r: -6deg; } .ph-2 { --r: 5deg; } .ph-3 { --r: -4deg; }
+  .ph-4 { --r: 4deg; } .ph-5 { --r: -5deg; } .ph-6 { --r: 5deg; }
+  .ph.stagger.is-visible { transform: none; opacity: 1; }
+
+  @media (max-width: 1023px) {
+    .gallery { display: none; }
+  }
+</style>
