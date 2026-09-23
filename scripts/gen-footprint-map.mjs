@@ -40,10 +40,20 @@ const ITALY_PULSE = { lat: 43.0, lng: 12.0 }; // 意大利簇中心（呼吸点�
 
 const projection = geoNaturalEarth1();
 const path = geoPath(projection);
-const [[x0, y0], [x1, y1]] = path.bounds({ type: "Sphere" });
-const pad = 1.5;
-const W = x1 - x0 + pad * 2;
-const H = y1 - y0 + pad * 2;
+
+// 足迹带裁剪：冰岛(-25,66)到日本(146,31)，投影后取四角包围盒作 viewBox，其余大洲截断
+const CROP = { lon: [-28, 150], lat: [14, 72] };
+const corners = [
+  [CROP.lon[0], CROP.lat[0]], [CROP.lon[1], CROP.lat[0]],
+  [CROP.lon[0], CROP.lat[1]], [CROP.lon[1], CROP.lat[1]],
+].map((c) => projection(c));
+const cx0 = Math.min(...corners.map((c) => c[0]));
+const cx1 = Math.max(...corners.map((c) => c[0]));
+const cy0 = Math.min(...corners.map((c) => c[1]));
+const cy1 = Math.max(...corners.map((c) => c[1]));
+const pad = 4;
+const W = cx1 - cx0 + pad * 2;
+const H = cy1 - cy0 + pad * 2;
 
 const countries = topo.objects.countries.geometries;
 const match = (g, v) => g.id === v.id || v.names.includes(g.properties?.name);
@@ -54,7 +64,12 @@ for (const v of VISITED) {
   if (!g) throw new Error(`country not found: ${v.cc}`);
   visitedGeoms.push({ v, g });
 }
-const baseGeoms = countries.filter((g) => !visitedGeoms.some(({ g: vg }) => vg === g));
+const baseGeoms = countries.filter((g) => {
+  if (visitedGeoms.some(({ g: vg }) => vg === g)) return false;
+  // 剔除裁剪框外的国家（美洲/大洋洲等），缩小产物体积
+  const [[bx0, by0], [bx1, by1]] = path.bounds(topojson.feature(topo, g));
+  return bx1 > cx0 && bx0 < cx1 && by1 > cy0 && by0 < cy1;
+});
 const land = topojson.merge(topo, baseGeoms);
 
 const pt = ([lng, lat]) => projection([lng, lat]);
@@ -76,12 +91,11 @@ function featureOf(v, g) {
   }
   return f;
 }
-const cityR = W * 0.0034;
-const haloR = W * 0.011;
+const cityR = W * 0.0021;
+const haloR = W * 0.007;
 
 const parts = [];
-parts.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W.toFixed(1)} ${H.toFixed(1)}" role="img" aria-label="世界地图，高亮去过的地方">`);
-parts.push(`<g transform="translate(${(-x0 + pad).toFixed(2)} ${(-y0 + pad).toFixed(2)})">`);
+parts.push(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="${cx0 - pad} ${cy0 - pad} ${W.toFixed(1)} ${H.toFixed(1)}" role="img" aria-label="世界地图，高亮去过的地方">`);
 parts.push(`<path class="fp-land" d="${path(land)}"/>`);
 for (const { v, g } of visitedGeoms) {
   parts.push(`<path class="fp-visited" data-cc="${v.cc}" d="${path(featureOf(v, g))}"/>`);
@@ -95,10 +109,9 @@ parts.push(`</g>`);
 const [px, py] = pt([ITALY_PULSE.lng, ITALY_PULSE.lat]);
 parts.push(`<circle class="fp-pulse-core" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${(cityR * 0.85).toFixed(1)}"/>`);
 parts.push(`<circle class="fp-pulse-halo" cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${haloR.toFixed(1)}"/>`);
-parts.push(`</g></svg>`);
+parts.push(`</svg>`);
 
 writeFileSync("public/images/footprint-map.svg", parts.join("\n"));
 console.log(
-  `written: public/images/footprint-map.svg  viewBox ${W.toFixed(0)}x${H.toFixed(0)}`,
-  `| ${PINS.length} cities | pulse %: ${(px - x0 + pad) / W * 100}, ${(py - y0 + pad) / H * 100}`
+  `written: public/images/footprint-map.svg | ${PINS.length} cities | viewBox ${cx0 - pad} ${cy0 - pad} ${W.toFixed(0)} ${H.toFixed(0)}`
 );
