@@ -95,22 +95,27 @@ const latest = posts.slice(0, 3);
     const from = panels[cur];
     const to = panels[idx];
     const dir = idx > cur ? 1 : -1;
+    to.style.setProperty("--dir", dir);
+    from.style.setProperty("--dir", dir);
     to.classList.remove("screen-leaving");
+    // 无过渡把待入面板摆到入场起点（60% 视口外），下一帧再放开过渡推入
     to.style.transition = "none";
-    to.style.transform = "translateY(" + dir * 24 + "px)";
+    to.style.transform = "translateY(" + dir * 60 + "%)";
     to.style.opacity = "0";
     requestAnimationFrame(() => {
-      to.style.transition = "";
-      from.classList.remove("screen-active");
-      from.classList.add("screen-leaving");
-      to.classList.add("screen-active");
-      to.style.transform = "";
-      to.style.opacity = "";
-      cur = idx;
-      setTimeout(() => {
-        from.classList.remove("screen-leaving");
-        busy = false;
-      }, 380);
+      requestAnimationFrame(() => {
+        to.style.transition = "";
+        from.classList.remove("screen-active");
+        from.classList.add("screen-leaving");
+        to.classList.add("screen-active");
+        to.style.transform = "";
+        to.style.opacity = "";
+        cur = idx;
+        setTimeout(() => {
+          from.classList.remove("screen-leaving");
+          busy = false;
+        }, 680);
+      });
     });
   }
   document.querySelectorAll("[data-next-screen]").forEach((btn) => {
