@@ -7,8 +7,8 @@
     "image": "/images/projects/resume-tailor.png"
   },
   {
-    "name": "AI驱动的热点事件小说创",
-    "description": "热点扫描到短篇小说成文工作台：AI帮你快速get最新热点事件的内核，并创造出大家喜闻乐见的爽文/重生/复仇等类型网文。从 0 到 1 完成前端设计、API 服务端对接，Agent 中枢编排 3 个 Skill，实现分步数据流转和功能实现。",
+    "name": "热点驱动的AI小说创作引擎",
+    "description": "AI帮你快速get最新热点事件的内核，并创造出大家喜闻乐见的爽文/重生/复仇等类型网文。从 0 到 1 完成前端设计、API 服务端对接，Agent 中枢编排 3 个 Skill，实现分步数据流转和功能实现。",
     "href": "https://chengsiyu-web.github.io/hotlist-direction-showcase/",
     "year": "2026",
     "image": "/images/projects/hotlist-demo.png"
