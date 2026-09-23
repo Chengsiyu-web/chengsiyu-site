@@ -44,13 +44,13 @@ for (const p of PINS) {
   map.addPin({
     lat: p.lat,
     lng: p.lng,
-    svgOptions: { color: "#B88080", radius: 0.7 },
+    svgOptions: { color: "#B88080", radius: 0.75 },
   });
 }
 
 const svg = map.getSVG({
-  radius: 0.26,
-  color: "#9E9890",
+  radius: 0.24,
+  color: "#D6D0C6",
   shape: "circle",
   backgroundColor: "transparent",
 });
