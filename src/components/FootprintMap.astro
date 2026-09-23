@@ -1,153 +1,130 @@
 ---
-// 足迹地图：dotted-map 生成的世界点阵（scripts/gen-footprint-map.mjs），27 城市级 pin。
-// 地图本体只保留点 + 意大利一处引线标注（空白海域，无遮挡）；
-// 国家/城市信息在右侧索引列表里，地图上不再浮标签（欧洲 6 国挤 160px 必然重叠）。
-// 改去过的地方：改 scripts/gen-footprint-map.mjs 的 PINS + 本文件 COUNTRIES，重跑脚本。
-const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-
-// 意大利 pin 簇中心（SVG viewBox 百分比，取自生成产物的粉点坐标）
-const ITALY = { x: 53.6, y: 31.7 };
+// 足迹地图：区域高亮（scripts/gen-footprint-map.mjs 生成的国界多边形）。
+// 9 个到访国柔粉填充，hover 国家弹出城市清单；意大利保留呼吸点。
+// 改去过的地方：改 scripts/gen-footprint-map.mjs 的 VISITED/PINS + 本文件 COUNTRIES，重跑脚本。
+import { readFileSync } from "node:fs";
+const svg = readFileSync("public/images/footprint-map.svg", "utf8");
 
 const COUNTRIES = [
-  { name: "CHINA", count: 13, cities: "北京 / 济南 / 大连 / 上海 / 杭州 / 泉州 / 福州 / 广州 / 香港 / 成都 / 重庆 / 大理 / 腾冲" },
-  { name: "JAPAN", count: 3, cities: "东京 / 京都 / 大阪" },
-  { name: "ITALY", count: 4, note: "交换一学年", accent: true, cities: "罗马 / 佛罗伦萨 / 威尼斯 / 米兰" },
-  { name: "FRANCE", count: 2, cities: "巴黎 / 尼斯（南法）" },
-  { name: "SPAIN", count: 1, cities: "巴塞罗那" },
-  { name: "CZECH", count: 1, cities: "布拉格" },
-  { name: "HUNGARY", count: 1, cities: "布达佩斯" },
-  { name: "DENMARK", count: 1, cities: "哥本哈根" },
-  { name: "ICELAND", count: 1, cities: "雷克雅未克" },
+  { cc: "CHN", name: "中国", cities: ["北京", "济南", "大连", "上海", "杭州", "泉州", "福州", "广州", "香港", "成都", "重庆", "大理", "腾冲"] },
+  { cc: "JPN", name: "日本", cities: ["东京", "京都", "大阪"] },
+  { cc: "ITA", name: "意大利", note: "交换一学年", cities: ["罗马", "佛罗伦萨", "威尼斯", "米兰"] },
+  { cc: "FRA", name: "法国", cities: ["巴黎", "尼斯（南法）"] },
+  { cc: "ESP", name: "西班牙", cities: ["巴塞罗那"] },
+  { cc: "CZE", name: "捷克", cities: ["布拉格"] },
+  { cc: "HUN", name: "匈牙利", cities: ["布达佩斯"] },
+  { cc: "DNK", name: "丹麦", cities: ["哥本哈根"] },
+  { cc: "ISL", name: "冰岛", cities: ["雷克雅未克"] },
 ];
 ---
 
 <div class="footprint">
   <p class="mono fp-label">足迹👣</p>
-  <div class="fp-wrap">
-    <div class="fp-map">
-      <img src={`${base}/images/footprint-map.svg`} alt="世界点阵地图，标记去过的地方" class="fp-svg" loading="lazy" />
-      <span class="fp-pulse" style={`left:${ITALY.x}%;top:${ITALY.y}%`} aria-hidden="true" />
-      <span class="fp-anno mono" style={`right:${100 - ITALY.x + 1.1}%;top:${ITALY.y}%`}>
-        <span class="fp-anno-text">交换一学年</span>
-        <i class="fp-anno-line" aria-hidden="true" />
-      </span>
-    </div>
-    <div class="fp-index">
-      <h3 class="fp-index-title">9 国 · 27 城</h3>
-      <ul>
-        {
-          COUNTRIES.map((c) => (
-            <li class={c.accent ? "accent" : ""}>
-              <div class="fp-nation">
-                <span class="mono fp-nation-name">{c.name}</span>
-                {c.note && <span class="fp-note">{c.note}</span>}
-                <span class="mono fp-n">{c.count}</span>
-              </div>
-              <p class="fp-cities">{c.cities}</p>
-            </li>
-          ))
-        }
-      </ul>
-      <p class="fp-tail">慢慢补全</p>
+  <div class="fp-map">
+    <div class="fp-svg" set:html={svg} />
+    <div class="fp-tip" data-tip hidden>
+      <span class="fp-tip-name"></span>
+      <span class="fp-tip-cities"></span>
     </div>
   </div>
+  <div class="fp-hint mono">· 去过的地方 · 9 国 27 城，慢慢补全</div>
 </div>
+
+<script define:vars={{ COUNTRIES }}>
+  const map = document.querySelector(".fp-map");
+  const tip = map.querySelector("[data-tip]");
+  const tipName = tip.querySelector(".fp-tip-name");
+  const tipCities = tip.querySelector(".fp-tip-cities");
+
+  for (const p of map.querySelectorAll(".fp-visited")) {
+    p.addEventListener("mouseenter", () => {
+      const c = COUNTRIES.find((c) => c.cc === p.dataset.cc);
+      if (!c) return;
+      tipName.textContent = c.note ? `${c.name} · ${c.note}` : c.name;
+      tipCities.textContent = c.cities.join(" / ");
+      tip.hidden = false;
+      const pr = p.getBoundingClientRect();
+      const mr = map.getBoundingClientRect();
+      const tw = tip.offsetWidth;
+      let x = pr.left - mr.left + pr.width / 2;
+      x = Math.max(tw / 2 + 6, Math.min(x, mr.width - tw / 2 - 6));
+      tip.style.left = `${x}px`;
+      const above = pr.top - mr.top > tip.offsetHeight + 16;
+      tip.classList.toggle("below", !above);
+      tip.style.top = `${above ? pr.top - mr.top - 10 : pr.bottom - mr.top + 10}px`;
+    });
+    p.addEventListener("mouseleave", () => {
+      tip.hidden = true;
+    });
+  }
+</script>
 
 <style>
   .footprint { margin-top: 8px; }
   .fp-label { color: var(--gray-mid); margin-bottom: 14px; display: block; font-size: 17px; }
-
-  .fp-wrap {
-    display: grid;
-    grid-template-columns: 1.25fr 1fr;
-    gap: 48px;
-    align-items: center;
+  .fp-map {
+    position: relative;
+    background: var(--bg-warm);
+    border: 1px solid var(--hairline);
+    border-radius: 8px;
+    padding: 22px 16px 18px;
   }
+  .fp-hint { color: var(--gray-mid); margin-top: 10px; font-size: 11px; letter-spacing: 0.06em; }
 
-  .fp-map { position: relative; }
-  .fp-svg { width: 100%; height: auto; display: block; }
-
-  /* 意大利主场：pin 簇上的呼吸点 */
-  .fp-pulse {
+  .fp-tip {
     position: absolute;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--pink-deep);
-    box-shadow: 0 0 0 3px rgba(184, 128, 128, 0.3);
-    animation: poiPulse 2.2s ease infinite;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -100%);
+    background: var(--ink);
+    padding: 9px 14px;
+    border-radius: 4px;
+    z-index: 2;
+    white-space: nowrap;
+    pointer-events: none;
+    box-shadow: 0 6px 18px rgba(42, 36, 32, 0.18);
+  }
+  .fp-tip.below { transform: translate(-50%, 0); }
+  .fp-tip-name {
+    color: var(--paper);
+    font-size: 12px;
+    display: block;
+    margin-bottom: 3px;
+  }
+  .fp-tip-cities { color: var(--gray-dim-dark); font-size: 11.5px; }
+</style>
+
+<style is:global>
+  /* SVG 由构建脚本注入（set:html 不走 scoped 处理），填色在这里统一定义 */
+  .fp-svg svg { width: 100%; height: auto; display: block; }
+  .fp-land { fill: #E9E3DA; }
+  .fp-visited {
+    fill: #EDD5D5;
+    stroke: rgba(184, 128, 128, 0.4);
+    stroke-width: 0.6;
+    transition: fill 0.24s var(--ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .fp-visited:hover { fill: #E2C3C3; }
+  }
+  .fp-city { fill: #B88080; pointer-events: none; }
+  .fp-pulse-core { fill: #B88080; pointer-events: none; }
+  .fp-pulse-halo {
+    fill: none;
+    stroke: #B88080;
+    stroke-width: 1.1;
+    pointer-events: none;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: fpHalo 2.4s var(--ease-out) infinite;
+  }
+  @keyframes fpHalo {
+    0% { transform: scale(0.35); opacity: 0.55; }
+    70% { transform: scale(1); opacity: 0; }
+    100% { transform: scale(1); opacity: 0; }
   }
   @media (prefers-reduced-motion: reduce) {
-    .fp-pulse { animation: none; }
+    .fp-pulse-halo { animation: none; opacity: 0.18; }
   }
-  @keyframes poiPulse {
-    0%, 100% { box-shadow: 0 0 0 3px rgba(184, 128, 128, 0.3); }
-    50% { box-shadow: 0 0 0 7px rgba(184, 128, 128, 0.1); }
-  }
-
-  /* 引线标注：文字落在意大利以西的大西洋空白海域，细线指向 pin 簇 */
-  .fp-anno {
-    position: absolute;
-    transform: translateY(-50%);
-    display: flex;
-    align-items: center;
-    gap: 7px;
-    color: var(--pink-deep);
-    font-size: 9.5px;
-    letter-spacing: 0.14em;
-    white-space: nowrap;
-  }
-  .fp-anno-line {
-    width: 22px;
-    height: 1px;
-    background: var(--pink-deep);
-    opacity: 0.45;
-    flex: none;
-  }
-
-  /* 右侧索引 */
-  .fp-index-title {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: clamp(1.5rem, 2.4vw, 1.9rem);
-    margin: 0 0 6px;
-  }
-  .fp-index ul { list-style: none; margin: 0; padding: 0; }
-  .fp-index li {
-    border-top: 1px solid var(--hairline);
-    padding: 10px 0 11px;
-  }
-  .fp-nation {
-    display: flex;
-    align-items: baseline;
-    gap: 10px;
-  }
-  .fp-nation-name {
-    font-size: 10px;
-    letter-spacing: 0.16em;
-    color: var(--gray-mid);
-    transition: color 0.24s var(--ease-out);
-  }
-  .fp-index li:hover .fp-nation-name { color: var(--ink); }
-  .fp-index li.accent .fp-nation-name { color: var(--pink-deep); }
-  .fp-note { color: var(--pink-deep); font-size: 11px; }
-  .fp-n { margin-left: auto; font-size: 10px; color: var(--gray-light); }
-  .fp-cities {
-    margin: 4px 0 0;
-    font-size: 12px;
-    color: var(--gray-mid);
-    line-height: 1.8;
-  }
-  .fp-tail {
-    margin: 14px 0 0;
-    color: var(--gray-light);
-    font-size: 11px;
-    letter-spacing: 0.08em;
-  }
-
-  @media (max-width: 860px) {
-    .fp-wrap { grid-template-columns: 1fr; gap: 28px; }
-    .fp-map { max-width: 560px; margin: 0 auto; }
+  @media (hover: none) {
+    .fp-tip { display: none !important; }
   }
 </style>
