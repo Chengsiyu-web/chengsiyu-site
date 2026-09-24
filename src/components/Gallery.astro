@@ -1,6 +1,7 @@
 ---
-// Hero 右侧个人照轮播：居中聚焦 coverflow（jitter "Gallery: Scroll" 的网页翻译）
-// 中心照片放大清晰，邻照缩小后退变暗，切换时全队列平滑交接。
+// Hero 右侧个人照轮播：两侧渐隐聚焦式（jitter "Interactive Gallery" 的网页翻译）
+// 中央照片原尺寸清晰，两侧照片 scale/opacity/blur 连续衰减；3s 步进 + lerp 平滑，
+// hover 任意照片滑到正中并暂停，1.2s 后恢复；双份渲染无缝循环。
 // 换照片：替换 public/images/gallery/ 下的文件并改 PHOTOS（竖构图最佳）。
 const PHOTOS = [
   { src: "/images/gallery/03d4835b5b40b2bc16a36b161d7614fc.jpg", alt: "个人照一" },
@@ -15,139 +16,118 @@ const PHOTOS = [
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
-<div class="carou" role="region" aria-roledescription="照片轮播" aria-label="个人照片" tabindex="0" data-carousel>
-  <div class="track">
-    {
-      PHOTOS.map((p, i) => (
-        <button class="slide" data-slide={i} aria-label={`第 ${i + 1} 张，点击居中查看`}>
-          <img src={`${base}${p.src}`} alt={p.alt} loading={i < 2 ? "eager" : "lazy"} draggable="false" />
-        </button>
-      ))
-    }
-  </div>
-  <div class="dots" role="tablist" aria-label="照片位置">
-    {PHOTOS.map((_, i) => <button class="dot" data-dot={i} aria-label={`第 ${i + 1} 张`} />)}
-  </div>
+<div
+  class="carou"
+  role="region"
+  aria-roledescription="照片轮播"
+  aria-label="个人照片"
+  data-carousel
+>
+  {
+    PHOTOS.concat(PHOTOS).map((p, i) => (
+      <button class="slide" data-i={i} aria-hidden="true" tabindex="-1">
+        <img src={`${base}${p.src}`} alt={p.alt} loading={i < 3 ? "eager" : "lazy"} draggable="false" />
+      </button>
+    ))
+  }
 </div>
 
 <script>
   const root = document.querySelector("[data-carousel]");
   if (root) {
     const slides = Array.from(root.querySelectorAll(".slide"));
-    const dots = Array.from(root.querySelectorAll(".dot"));
-    const N = slides.length;
-    let cur = 0;
-    let timer = 0;
+    const N = slides.length / 2; // 双份渲染，真实张数为一半
+    const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const SP = 252;          // 相邻照片中心间距（px，容器坐标系）
+    const LERP = 0.085;
+    const AUTO_MS = 3000;
+    const RESUME_MS = 1200;
 
-    // offset：以 cur 为 0 的环形距离（-N/2..N/2），驱动 CSS 变量做 transform
-    const offsetOf = (i) => {
-      let o = i - cur;
-      if (o > N / 2) o -= N;
-      if (o < -N / 2) o += N;
-      return o;
-    };
-    const apply = () => {
-      slides.forEach((el, i) => {
-        const o = offsetOf(i);
-        el.style.setProperty("--o", o);
-        el.setAttribute("aria-hidden", String(Math.abs(o) > 1));
-        el.tabIndex = -1;
+    let pos = 0, tPos = 0;
+    let paused = false, resumeTimer = 0, last = performance.now();
+
+    const auto = REDUCED ? 0 : setInterval(() => { if (!paused) tPos += 1; }, AUTO_MS);
+
+    slides.forEach((el, i) => {
+      el.addEventListener("mouseenter", () => {
+        // 滑动未结束时忽略新 hover，防止路过的照片劫持目标
+        if (Math.abs(tPos - pos) > 0.08) return;
+        paused = true;
+        clearTimeout(resumeTimer);
+        tPos = i + N * Math.round((pos - i) / N); // 就近环绕
       });
-      dots.forEach((d, i) => d.classList.toggle("on", i === cur));
-    };
-    const go = (i) => {
-      cur = ((i % N) + N) % N;
-      apply();
-    };
-    const arm = () => {
-      clearInterval(timer);
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      timer = setInterval(() => go(cur + 1), 4500);
-    };
-
-    slides.forEach((el, i) => el.addEventListener("click", () => { go(i); arm(); }));
-    dots.forEach((d, i) => d.addEventListener("click", () => { go(i); arm(); }));
-    root.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowRight") { go(cur + 1); arm(); }
-      if (e.key === "ArrowLeft") { go(cur - 1); arm(); }
-    });
-    // hover / 页面隐藏时暂停自动轮播
-    root.addEventListener("mouseenter", () => clearInterval(timer));
-    root.addEventListener("mouseleave", arm);
-    document.addEventListener("visibilitychange", () => {
-      if (document.hidden) clearInterval(timer); else arm();
+      el.addEventListener("mouseleave", () => {
+        resumeTimer = setTimeout(() => { paused = false; }, RESUME_MS);
+      });
     });
 
-    apply();
-    arm();
+    const clamp01 = (v) => Math.max(0, Math.min(1, v));
+
+    function frame(now) {
+      const dt = Math.min(50, now - last);
+      last = now;
+      const k = REDUCED ? 1 : 1 - Math.pow(1 - LERP, dt / 16.667);
+      pos += (tPos - pos) * k;
+      if (Math.abs(tPos - pos) < 0.001) pos = tPos;
+
+      // 中心照片在容器中心；d<0（左侧）时衰减更快且最多露出一张半透明近照——
+      // Hero 里标题在左，溢出预算只在右侧
+      const cx = root.clientWidth / 2, cy = root.clientHeight / 2;
+      for (let i = 0; i < slides.length; i++) {
+        let d = ((i - pos) % (N * 2) + N * 2) % (N * 2);
+        if (d > N) d -= N * 2;
+        const neg = d < 0 ? d * 1.6 : 0;
+        const dd = d + neg * 0.85; // 左侧衰减加速
+        const ad = Math.abs(dd);
+        const scale = Math.max(0.05, 1 - 0.16 * ad);
+        const op = ad <= 0.9 ? 1 : clamp01(1 - (ad - 0.9) / 1.6);
+        const blur = REDUCED ? 0 : Math.min(5 * ad, 12);
+        const el = slides[i];
+        el.style.transform =
+          `translate(${(cx + dd * SP).toFixed(1)}px, ${cy}px) translate(-50%, -50%) scale(${scale.toFixed(3)})`;
+        el.style.opacity = op.toFixed(3);
+        el.style.filter = blur > 0.05 ? `blur(${blur.toFixed(1)}px)` : "none";
+        el.style.zIndex = String(100 - Math.round(ad * 10));
+        el.style.pointerEvents = op > 0.1 ? "auto" : "none";
+      }
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
   }
 </script>
 
 <style>
   .carou {
     position: relative;
-    width: 30rem;
+    width: 27rem;
     flex: none;
-    height: 34rem;
-    outline: none;
-  }
-  .carou:focus-visible .track { outline: 2px solid var(--pink); outline-offset: 8px; border-radius: 8px; }
-  .track {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: 33rem;
+    overflow: visible; /* 两侧渐隐照片允许溢出容器，由 Hero 层裁剪 */
   }
   .slide {
     position: absolute;
-    width: 82%;
-    aspect-ratio: 3 / 4;
+    left: 0;
+    top: 0;
+    width: 17.5rem;
+    height: 23rem;
     padding: 0;
     border: none;
-    background: none;
+    background: var(--pink-lt);
+    border-radius: 10px;
+    overflow: hidden;
     cursor: pointer;
-    /* --o：距中心的环形 offset（JS 注入）。位移 ×6.4rem，远端越远越缩越小 */
-    transform: translateX(calc(var(--o) * 6.4rem)) scale(calc(1 - min(var(--ao, 0) * 0.24, 0.48)));
-    --ao: calc(var(--o) * var(--o)); /* 近似 |o| 的平方，避免 sqrt；中心为 0 */
-    z-index: calc(10 - min(var(--ao, 0), 9));
-    opacity: calc(1 - min(var(--ao) * 0.4, 0.75));
-    filter: brightness(calc(1 - min(var(--ao) * 0.35, 0.45))) blur(calc(min(var(--ao) * 0.07rem, 0.15rem)));
-    transition: transform 0.72s cubic-bezier(0.65, 0, 0.35, 1), opacity 0.72s cubic-bezier(0.65, 0, 0.35, 1), filter 0.72s cubic-bezier(0.65, 0, 0.35, 1);
+    will-change: transform, opacity, filter;
   }
   .slide img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 6px;
-    background: var(--pink-lt);
+    border-radius: 10px;
     user-select: none;
   }
-  .dots {
-    position: absolute;
-    bottom: -30px;
-    left: 0;
-    right: 0;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-  }
-  .dot {
-    width: 6px;
-    height: 6px;
-    padding: 0;
-    border: none;
-    border-radius: 50%;
-    background: var(--gray-dim-dark);
-    opacity: 0.5;
-    cursor: pointer;
-    transition: transform 0.3s var(--ease-out), opacity 0.3s var(--ease-out), background 0.3s var(--ease-out);
-  }
-  .dot.on { background: var(--pink); opacity: 1; transform: scale(1.5); }
-
   @media (prefers-reduced-motion: reduce) {
-    .slide { transition: none; }
+    .slide { filter: none !important; }
   }
   @media (max-width: 1023px) {
     .carou { display: none; }
