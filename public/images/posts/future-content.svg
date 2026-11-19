@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="标准化内容流生长为个性化叙事">
+  <rect width="1600" height="900" fill="#f7f4ef"/>
+  <g stroke="#2b2622" stroke-width="3" fill="none">
+    <!-- uniform squares grid on the left -->
+    <g fill="#f7f4ef">
+      <rect x="180" y="330" width="56" height="56" rx="8"/>
+      <rect x="260" y="330" width="56" height="56" rx="8"/>
+      <rect x="340" y="330" width="56" height="56" rx="8"/>
+      <rect x="180" y="410" width="56" height="56" rx="8"/>
+      <rect x="260" y="410" width="56" height="56" rx="8"/>
+      <rect x="340" y="410" width="56" height="56" rx="8"/>
+      <rect x="180" y="490" width="56" height="56" rx="8"/>
+      <rect x="260" y="490" width="56" height="56" rx="8"/>
+      <rect x="340" y="490" width="56" height="56" rx="8"/>
+    </g>
+    <!-- dissolving dots flowing right -->
+    <g fill="#2b2622" stroke="none">
+      <circle cx="470" cy="380" r="5" opacity=".7"/>
+      <circle cx="520" cy="430" r="4" opacity=".55"/>
+      <circle cx="560" cy="360" r="4" opacity=".5"/>
+      <circle cx="600" cy="450" r="5" opacity=".6"/>
+      <circle cx="640" cy="400" r="4" opacity=".45"/>
+      <circle cx="690" cy="440" r="5" opacity=".55"/>
+      <circle cx="730" cy="380" r="4" opacity=".4"/>
+      <circle cx="770" cy="430" r="4" opacity=".5"/>
+    </g>
+    <!-- faceless figure -->
+    <circle cx="1000" cy="360" r="42"/>
+    <path d="M920 520 q80 -70 160 0"/>
+    <path d="M940 560 q60 26 120 0"/>
+    <!-- sprout growing upward from figure's hands -->
+    <path d="M1000 560 C1000 480 1000 440 1000 400" stroke="#7d9a88" stroke-width="4"/>
+    <g stroke="#7d9a88" stroke-width="4">
+      <path d="M1000 470 q-52 -14 -66 -58"/>
+      <path d="M1000 470 q52 -14 66 -58"/>
+      <path d="M1000 418 q-40 -10 -52 -44"/>
+      <path d="M1000 418 q40 -10 52 -44"/>
+    </g>
+    <g fill="#93bfb7" stroke="none">
+      <ellipse cx="934" cy="412" rx="17" ry="10" transform="rotate(-40 934 412)"/>
+      <ellipse cx="1066" cy="412" rx="17" ry="10" transform="rotate(40 1066 412)"/>
+      <ellipse cx="948" cy="374" rx="14" ry="8" transform="rotate(-40 948 374)"/>
+      <ellipse cx="1052" cy="374" rx="14" ry="8" transform="rotate(40 1052 374)"/>
+      <ellipse cx="1000" cy="382" rx="10" ry="16"/>
+    </g>
+  </g>
+  <circle cx="1230" cy="240" r="6" fill="#7d9a88"/>
+  <circle cx="380" cy="220" r="5" fill="#2b2622" opacity=".5"/>
+</svg>

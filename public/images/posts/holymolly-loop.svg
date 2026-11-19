@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="创作、消费、改编的闭环">
+  <rect width="1600" height="900" fill="#f7f4ef"/>
+  <g stroke="#2b2622" stroke-width="3" fill="none">
+    <!-- three nodes -->
+    <g>
+      <rect x="290" y="350" width="230" height="230" rx="22" fill="#f7f4ef"/>
+      <!-- consume: play triangle -->
+      <path d="M378 420 L448 465 L378 510 Z"/>
+    </g>
+    <g>
+      <rect x="685" y="160" width="230" height="230" rx="22" fill="#f7f4ef"/>
+      <!-- create: pencil -->
+      <path d="M755 320 L830 245 L855 270 L780 345 L750 350 Z"/>
+      <line x1="822" y1="253" x2="847" y2="278"/>
+    </g>
+    <g>
+      <rect x="1080" y="350" width="230" height="230" rx="22" fill="#f7f4ef"/>
+      <!-- remix: fork -->
+      <path d="M1160 520 L1160 450 Q1160 420 1185 405 L1215 390"/>
+      <path d="M1160 470 L1195 445"/>
+      <circle cx="1160" cy="535" r="12" fill="#2b2622"/>
+      <circle cx="1222" cy="383" r="12"/>
+      <circle cx="1205" cy="440" r="12"/>
+    </g>
+    <!-- loop arrows, accent -->
+    <g stroke="#cf7f74" stroke-width="4" fill="none">
+      <path d="M520 400 Q610 300 678 262"/>
+      <path d="M922 262 Q1010 300 1073 400"/>
+      <path d="M1080 620 Q800 760 520 620"/>
+    </g>
+    <g fill="#cf7f74" stroke="none">
+      <path d="M690 254 L662 250 L678 278 Z"/>
+      <path d="M1082 412 L1070 388 L1046 408 Z"/>
+      <path d="M508 612 L536 604 L524 636 Z"/>
+    </g>
+  </g>
+  <circle cx="420" cy="200" r="5" fill="#2b2622" opacity=".5"/>
+  <circle cx="1180" cy="200" r="6" fill="#cf7f74"/>
+</svg>

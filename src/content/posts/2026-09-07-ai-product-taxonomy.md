@@ -12,6 +12,8 @@ AI 编码工具先按"能不能执行"分成两半。
 
 ## 一、对话助手（CHAT 形态）
 
+![对话形态与执行形态的对照](/images/posts/ai-taxonomy.svg)
+
 ChatGPT、Claude、DeepSeek、Kimi、豆包。
 
 这类产品形态高度相似，护城河在于聊天框背后的能力：
